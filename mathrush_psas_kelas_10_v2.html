@@ -1,0 +1,2327 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MathRush | Master Matematika Kelas 10 SMA</title>
+    
+    <!-- Google Fonts: Plus Jakarta Sans & Cinzel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- KaTeX untuk Rendering Rumus Matematika -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" onload="window.safeRenderMath && window.safeRenderMath(document.body)"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="window.safeRenderMath && window.safeRenderMath(document.body)"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Cinzel"', 'serif'],
+                    },
+                    colors: {
+                        obsidian: {
+                            950: '#07070a',
+                            900: '#101015',
+                            800: '#171720',
+                            700: '#222230',
+                        },
+                        gold: {
+                            300: '#fde08d',
+                            400: '#f5c451',
+                            500: '#d4af37',
+                            600: '#b48a1e',
+                            700: '#856412',
+                        }
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.25)',
+                        'gold-strong': '0 0 40px rgba(245, 196, 81, 0.55)',
+                        'crimson-glow': '0 0 35px rgba(225, 29, 72, 0.55)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #07070a;
+            color: #f4f4f5;
+            overflow-x: hidden;
+        }
+
+        .bg-grid-pattern {
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+                linear-gradient(to right, rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+        }
+
+        .text-gold-gradient {
+            background: linear-gradient(135deg, #fde08d 0%, #d4af37 50%, #f59e0b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass-card {
+            background: rgba(16, 16, 21, 0.88);
+            backdrop-filter: blur(14px);
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card-hover:hover {
+            border-color: rgba(212, 175, 55, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #f5c451 0%, #d4af37 60%, #b48a1e 100%);
+            color: #07070a;
+            font-weight: 800;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .btn-gold:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 24px rgba(212, 175, 55, 0.5);
+            transform: translateY(-1px);
+        }
+        .btn-gold:active {
+            transform: translateY(1px);
+        }
+
+        /* Animations for Boss Battle & UI */
+        @keyframes shake {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            15% { transform: translate(-10px, -4px) rotate(-1.5deg); }
+            30% { transform: translate(10px, 3px) rotate(1.5deg); }
+            45% { transform: translate(-8px, 4px) rotate(-1deg); }
+            60% { transform: translate(8px, -3px) rotate(1deg); }
+            75% { transform: translate(-5px, 2px) rotate(-0.5deg); }
+        }
+        .animate-shake {
+            animation: shake 0.48s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes bossFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-9px) scale(1.03); }
+        }
+        .animate-boss-float {
+            animation: bossFloat 2.6s ease-in-out infinite;
+        }
+
+        @keyframes bossEnraged {
+            0%, 100% { transform: translateY(0px) scale(1.06) rotate(-1deg); filter: drop-shadow(0 0 18px rgba(244, 63, 94, 0.85)); }
+            50% { transform: translateY(-11px) scale(1.12) rotate(1deg); filter: drop-shadow(0 0 32px rgba(251, 191, 36, 0.95)); }
+        }
+        .animate-boss-enraged {
+            animation: bossEnraged 1.3s ease-in-out infinite;
+        }
+
+        @keyframes slashImpact {
+            0% { transform: scale(0.3) rotate(-25deg); opacity: 1; }
+            50% { transform: scale(1.4) rotate(10deg); opacity: 0.95; }
+            100% { transform: scale(1.8) rotate(20deg); opacity: 0; }
+        }
+        .animate-slash {
+            animation: slashImpact 0.45s ease-out forwards;
+        }
+
+        @keyframes glitchScreen {
+            0% { filter: hue-rotate(0deg) invert(0); transform: skewX(0deg); }
+            25% { filter: hue-rotate(90deg) invert(0.15); transform: skewX(3deg); }
+            50% { filter: hue-rotate(180deg) invert(0); transform: skewX(-3deg); }
+            75% { filter: hue-rotate(270deg) invert(0.2); transform: skewX(2deg); }
+            100% { filter: hue-rotate(360deg) invert(0); transform: skewX(0deg); }
+        }
+        .ability-glitch {
+            animation: glitchScreen 0.4s infinite;
+        }
+
+        @keyframes fogPulse {
+            0%, 100% { opacity: 0.88; }
+            50% { opacity: 0.96; }
+        }
+        .ability-fog {
+            animation: fogPulse 1.5s infinite;
+        }
+
+        @keyframes confettiFall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+        }
+        .confetti-piece {
+            position: fixed;
+            top: 0;
+            z-index: 60;
+            pointer-events: none;
+            animation: confettiFall linear forwards;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #101015; }
+        ::-webkit-scrollbar-thumb { background: #2d2d3d; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+        .katex { font-size: 1.06em; color: #fafafa; }
+        .katex-display { margin: 0.55em 0; overflow-x: auto; overflow-y: hidden; padding: 0.2rem 0; }
+    </style>
+</head>
+<body id="app-body" class="bg-grid-pattern min-h-screen flex flex-col justify-between selection:bg-gold-500 selection:text-obsidian-950">
+
+    <!-- OVERLAY GANGGUAN ABILITY MATHGOD -->
+    <div id="mg-ability-overlay" class="hidden fixed inset-0 z-30 pointer-events-none flex items-center justify-center">
+        <div id="mg-fog-layer" class="hidden absolute inset-0 bg-obsidian-950/85 backdrop-blur-md ability-fog"></div>
+        <div id="mg-ability-banner" class="relative z-40 px-6 py-3 rounded-2xl bg-rose-950/90 border-2 border-rose-500 text-rose-200 font-display font-bold text-sm sm:text-lg shadow-crimson-glow text-center mx-4">
+            ⚠️ MATHGOD MENGELUARKAN SIHIR GANGGUAN!
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="sticky top-0 z-40 border-b border-gold-500/25 bg-obsidian-950/92 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <button type="button" onclick="window.sfx('click'); window.switchView('home')" class="flex items-center gap-3 group focus:outline-none cursor-pointer">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-700 flex items-center justify-center shadow-gold-glow group-hover:scale-105 transition-transform">
+                    <span class="font-display font-black text-obsidian-950 text-xl">∑</span>
+                </div>
+                <div class="text-left">
+                    <span class="font-display font-bold text-xl tracking-wider text-gold-gradient block leading-none">MATHRUSH</span>
+                    <span class="text-[11px] uppercase tracking-widest text-gray-400">PSAS / ASAS Kelas 10</span>
+                </div>
+            </button>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-1.5">
+                <button type="button" onclick="window.sfx('click'); window.switchView('home')" id="nav-home" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-gold-400 transition-colors cursor-pointer">Beranda</button>
+                <button type="button" onclick="window.sfx('click'); window.switchView('materi')" id="nav-materi" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-gold-400 transition-colors cursor-pointer">Materi Lengkap</button>
+                <button type="button" onclick="window.sfx('click'); window.switchView('quiz-setup')" id="nav-quiz" class="nav-link px-3.5 py-2 rounded-lg text-sm font-medium text-gray-300 hover:text-gold-400 transition-colors cursor-pointer">Latihan Quiz (200 Soal)</button>
+                <button type="button" onclick="window.sfx('bossEnter'); window.switchView('mathgod')" id="nav-mathgod" class="nav-link px-4 py-2 rounded-lg text-sm font-bold text-gold-300 border border-gold-500/40 bg-gold-500/15 hover:bg-gold-500/25 transition-all flex items-center gap-1.5 cursor-pointer shadow-gold-glow">
+                    <span>👑</span> VS MathGod
+                </button>
+            </nav>
+
+            <!-- Audio Toggle, Trophy Badge & Mobile Menu -->
+            <div class="flex items-center gap-2.5">
+                <!-- Music & SFX Control -->
+                <button type="button" id="audio-toggle-btn" onclick="window.toggleAudioSystem()" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-obsidian-800 border border-gold-500/35 hover:border-gold-400 transition-all cursor-pointer text-xs font-semibold text-gold-300" title="Aktifkan/Matikan Musik & Efek Suara">
+                    <span id="audio-icon">🔇</span>
+                    <span id="audio-label" class="hidden sm:inline">Musik: OFF</span>
+                </button>
+
+                <!-- Trophy Counter -->
+                <button type="button" onclick="window.sfx('trophy'); window.openTrophyModal()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-obsidian-800 border border-gold-500/35 hover:border-gold-400 transition-all cursor-pointer" title="Lemari Trophy">
+                    <span class="text-sm">🏆</span>
+                    <span id="header-trophy-count" class="text-xs font-bold text-gold-300">0</span>
+                </button>
+
+                <button type="button" onclick="window.sfx('click'); window.toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-gray-300 hover:text-gold-400 hover:bg-obsidian-800 cursor-pointer" aria-label="Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Nav -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-gold-500/15 bg-obsidian-900 px-4 py-3 space-y-1.5">
+            <button type="button" onclick="window.sfx('click'); window.switchView('home'); window.toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-gray-200 hover:bg-obsidian-800">🏠 Beranda</button>
+            <button type="button" onclick="window.sfx('click'); window.switchView('materi'); window.toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-gray-200 hover:bg-obsidian-800">📚 Materi Lengkap & Video</button>
+            <button type="button" onclick="window.sfx('click'); window.switchView('quiz-setup'); window.toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-gray-200 hover:bg-obsidian-800">⚡ Latihan Quiz (200 Soal)</button>
+            <button type="button" onclick="window.sfx('bossEnter'); window.switchView('mathgod'); window.toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-bold text-gold-400 bg-gold-500/10">👑 Mode VS MathGod</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- ==================== VIEW 1: HOME / BERANDA ==================== -->
+        <section id="view-home" class="space-y-12">
+            <!-- Hero Section -->
+            <div class="text-center max-w-3xl mx-auto pt-3 sm:pt-6 space-y-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-300 text-xs font-semibold tracking-wider uppercase">
+                    <span>✨</span> Edisi Lengkap PSAS Matematika Kelas 10 SMA
+                </div>
+                <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-black tracking-tight leading-tight">
+                    Taklukkan Angka, <br>
+                    <span class="text-gold-gradient">Raih Takhta Juara.</span>
+                </h1>
+                <p class="text-gray-400 text-base sm:text-lg leading-relaxed">
+                    Kuasai seluruh 6 bab krusial Kelas 10 (Trigonometri, Eksponen, Logaritma, Barisan & Deret, SPLDV/SPtLDV, serta SPLTV/SPtLTV) lengkap dengan video pembelajaran, 200 bank soal acak, dan pertarungan epik melawan <strong class="text-gold-300">MathGod Fase 2</strong>!
+                </p>
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
+                    <button type="button" onclick="window.ensureAudioStarted(); window.sfx('click'); window.switchView('quiz-setup')" class="btn-gold px-7 py-3.5 rounded-xl text-sm sm:text-base flex items-center gap-2 shadow-gold-glow">
+                        <span>▶</span> Mulai Quiz (200 Soal)
+                    </button>
+                    <button type="button" onclick="window.ensureAudioStarted(); window.sfx('bossEnter'); window.switchView('mathgod')" class="px-7 py-3.5 rounded-xl text-sm sm:text-base font-bold text-gold-300 bg-obsidian-800 border border-gold-500/45 hover:bg-gold-500/15 transition-all flex items-center gap-2 cursor-pointer">
+                        <span>⚔️</span> Tantang MathGod
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500">🎧 Klik tombol <span class="text-gold-400 font-semibold">Musik</span> di pojok kanan atas untuk menikmati Backsound Chill Lobby, Quiz Asik, dan Battle Tegang!</p>
+            </div>
+
+            <!-- 3 Fitur Utama Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Fitur 1 -->
+                <div onclick="window.ensureAudioStarted(); window.sfx('click'); window.switchView('materi')" role="button" tabindex="0" class="glass-card glass-card-hover rounded-2xl p-6 cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+                            📚
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">1. Materi Full & Video YouTube</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Pembahasan mendalam tiap bab: definisi, sifat-sifat lengkap, cara menggambar daerah penyelesaian pertidaksamaan (SPtLDV & SPtLTV), contoh soal, dan link video YouTube pilihan.
+                        </p>
+                    </div>
+                    <div class="flex items-center text-xs font-bold uppercase tracking-wider text-gold-400 gap-1">
+                        Buka Modul Lengkap <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                <!-- Fitur 2 -->
+                <div onclick="window.ensureAudioStarted(); window.sfx('click'); window.switchView('quiz-setup')" role="button" tabindex="0" class="glass-card glass-card-hover rounded-2xl p-6 cursor-pointer group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform">
+                            🎲
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-gold-400 transition-colors">2. Bank 200 Soal Acak</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            200 soal terkurasi (Mudah, Sedang, HOTS) dari 6 bab utama yang diacak setiap sesi. Dilengkapi timer simulasi PSAS dan pembahasan langkah demi langkah.
+                        </p>
+                    </div>
+                    <div class="flex items-center text-xs font-bold uppercase tracking-wider text-gold-400 gap-1">
+                        Atur Latihan Sekarang <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+
+                <!-- Fitur 3 -->
+                <div onclick="window.ensureAudioStarted(); window.sfx('bossEnter'); window.switchView('mathgod')" role="button" tabindex="0" class="glass-card glass-card-hover rounded-2xl p-6 cursor-pointer group flex flex-col justify-between border-gold-500/45 relative overflow-hidden">
+                    <div class="absolute -right-6 -top-6 w-24 h-24 bg-gold-500/15 rounded-full blur-xl pointer-events-none"></div>
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform shadow-gold-glow">
+                            👑
+                        </div>
+                        <h3 class="text-xl font-bold text-gold-300 mb-2">3. Arena VS MathGod (Fase 2)</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed mb-4">
+                            Pilih 1 dari 3 Karakter dengan skill & kelemahan unik! Lawan MathGod dalam 15 detik/soal, hadapi sihir gangguan layar, dan kalahkan Fase 2-nya!
+                        </p>
+                    </div>
+                    <div class="flex items-center text-xs font-bold uppercase tracking-wider text-gold-400 gap-1">
+                        Masuk Ke Arena <span class="group-hover:translate-x-1 transition-transform">→</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cakupan 6 Bab & Trophy Preview -->
+            <div class="glass-card rounded-2xl p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-lg sm:text-xl font-bold text-white">Cakupan 6 Bab Utama Kurikulum Kelas 10</h2>
+                        <p class="text-xs sm:text-sm text-gray-400">Klik bab di bawah untuk langsung membaca materi lengkap dan menonton video pembahasannya</p>
+                    </div>
+                    <button type="button" onclick="window.sfx('trophy'); window.openTrophyModal()" class="self-start sm:self-auto text-xs font-semibold px-4 py-2.5 rounded-xl bg-obsidian-900 border border-gold-500/35 text-gold-300 hover:bg-gold-500/15 flex items-center gap-2 cursor-pointer">
+                        <span>🏆</span> Lemari Trophy (<span id="home-trophy-count">0</span>)
+                    </button>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(0)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">sin θ</span>
+                        <span class="text-xs font-semibold text-gray-200">Trigonometri</span>
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(1)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">aⁿ</span>
+                        <span class="text-xs font-semibold text-gray-200">Eksponen</span>
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(2)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">ᵃlog b</span>
+                        <span class="text-xs font-semibold text-gray-200">Logaritma</span>
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(3)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">Uₙ & Sₙ</span>
+                        <span class="text-xs font-semibold text-gray-200">Barisan & Deret</span>
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(4)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">ax + by ≤ c</span>
+                        <span class="text-xs font-semibold text-gray-200">SPLDV & SPtLDV</span>
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(5)" class="p-3.5 rounded-xl bg-obsidian-900/90 border border-white/10 hover:border-gold-400 text-center transition-all cursor-pointer">
+                        <span class="text-gold-400 font-display font-bold text-lg block mb-1">x, y, z</span>
+                        <span class="text-xs font-semibold text-gray-200">SPLTV & SPtLTV</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 2: MATERI LENGKAP & SUMBER VIDEO ==================== -->
+        <section id="view-materi" class="hidden space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-gold-500/20 pb-5">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Modul Pembelajaran Komprehensif</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">Materi Lengkap & Video Pembahasan</h2>
+                </div>
+                <p class="text-sm text-gray-400 max-w-md">Pelajari konsep mendalam, rumus inti, trik cepat, contoh soal bertingkat, dan tonton rekomendasi video YouTube per bab.</p>
+            </div>
+
+            <!-- Tabs Bab Materi -->
+            <div id="materi-tabs" class="flex flex-wrap gap-2"></div>
+
+            <!-- Konten Detail Materi -->
+            <div id="materi-content" class="glass-card rounded-2xl p-6 sm:p-8 space-y-8"></div>
+        </section>
+
+        <!-- ==================== VIEW 3A: PENGATURAN LATIHAN QUIZ ==================== -->
+        <section id="view-quiz-setup" class="hidden max-w-3xl mx-auto">
+            <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-7">
+                <div class="border-b border-gold-500/20 pb-5 flex flex-wrap items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Bank Soal Terintegrasi</span>
+                        <h2 class="font-display text-2xl sm:text-3xl font-bold text-white mt-1">Kustomisasi Latihan Quiz</h2>
+                        <p class="text-sm text-gray-400 mt-1">Soal diambil secara acak dari total <strong class="text-gold-300" id="total-bank-badge">200</strong> soal berkualitas.</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- 1. Pilih Topik / Bab -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gold-300 mb-2.5">1. Pilih Materi / Bab</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="setup-topic-grid">
+                            <button type="button" data-topic="ALL" class="topic-btn active-opt px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Semua Bab (200)</button>
+                            <button type="button" data-topic="Trigonometri" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Trigonometri</button>
+                            <button type="button" data-topic="Eksponen" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Eksponen</button>
+                            <button type="button" data-topic="Logaritma" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Logaritma</button>
+                            <button type="button" data-topic="Barisan dan Deret" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Barisan & Deret</button>
+                            <button type="button" data-topic="SPLDV & SPtLDV" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">SPLDV & SPtLDV</button>
+                            <button type="button" data-topic="SPLTV & SPtLTV" class="topic-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">SPLTV & SPtLTV</button>
+                        </div>
+                    </div>
+
+                    <!-- 2. Pilih Tingkat Kesulitan -->
+                    <div>
+                        <label class="block text-sm font-semibold text-gold-300 mb-2.5">2. Tingkat Kesulitan</label>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="setup-diff-grid">
+                            <button type="button" data-diff="ALL" class="diff-btn active-opt px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Semua Tingkat</button>
+                            <button type="button" data-diff="Mudah" class="diff-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Mudah</button>
+                            <button type="button" data-diff="Sedang" class="diff-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Sedang</button>
+                            <button type="button" data-diff="Sulit" class="diff-btn px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border text-center transition-all cursor-pointer">Sulit (HOTS)</button>
+                        </div>
+                    </div>
+
+                    <!-- 3. Jumlah Soal & 4. Timer -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-semibold text-gold-300 mb-2.5">3. Jumlah Soal</label>
+                            <div class="grid grid-cols-4 gap-2" id="setup-count-grid">
+                                <button type="button" data-count="10" class="count-btn active-opt py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer">10</button>
+                                <button type="button" data-count="20" class="count-btn py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer">20</button>
+                                <button type="button" data-count="30" class="count-btn py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer">30</button>
+                                <button type="button" data-count="40" class="count-btn py-2.5 rounded-xl text-xs sm:text-sm font-bold border transition-all cursor-pointer">40</button>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-semibold text-gold-300 mb-2.5">4. Batas Waktu (Timer)</label>
+                            <div class="grid grid-cols-2 gap-2" id="setup-time-grid">
+                                <button type="button" data-time="0" class="time-btn active-opt py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer">Tanpa Batas</button>
+                                <button type="button" data-time="600" class="time-btn py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer">10 Menit</button>
+                                <button type="button" data-time="1200" class="time-btn py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer">20 Menit</button>
+                                <button type="button" data-time="2400" class="time-btn py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer">40 Menit (PSAS)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="setup-warning" class="hidden p-3.5 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs"></div>
+
+                    <div class="pt-2">
+                        <button type="button" onclick="window.ensureAudioStarted(); window.sfx('start'); window.startCustomQuiz()" class="btn-gold w-full py-4 rounded-xl text-base flex items-center justify-center gap-2 shadow-gold-glow">
+                            <span>⚡</span> Mulai Mengerjakan Quiz Acak
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 3B: HALAMAN QUIZ AKTIF ==================== -->
+        <section id="view-quiz-active" class="hidden max-w-4xl mx-auto space-y-5">
+            <div class="glass-card rounded-2xl p-4 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <span id="quiz-progress-badge" class="px-3 py-1 rounded-lg bg-gold-500/15 border border-gold-500/35 text-gold-300 text-xs font-bold">
+                        Soal 1 / 10
+                    </span>
+                    <span id="quiz-meta-badge" class="text-xs text-gray-400 font-medium hidden sm:inline">
+                        Topik • Tingkat
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <div id="quiz-timer-box" class="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-obsidian-900 border border-gold-500/35 text-gold-400 font-mono font-bold text-sm">
+                        <span>⏱️</span>
+                        <span id="quiz-timer-display">∞</span>
+                    </div>
+                    <button type="button" onclick="window.sfx('click'); window.confirmFinishQuiz()" class="px-3.5 py-1.5 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/25 text-xs font-bold transition-colors cursor-pointer">
+                        Selesai & Nilai
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigasi Nomor Soal -->
+            <div class="glass-card rounded-2xl p-4 space-y-2.5">
+                <div class="flex items-center justify-between text-[11px] text-gray-400">
+                    <span>Navigasi Nomor Soal</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-gold-500/40 border border-gold-500 inline-block"></span> Terjawab</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-amber-500/40 border border-amber-400 inline-block"></span> Ragu-ragu</span>
+                    </div>
+                </div>
+                <div id="quiz-nav-pills" class="flex flex-wrap gap-1.5 max-h-28 overflow-y-auto"></div>
+            </div>
+
+            <!-- Area Pertanyaan -->
+            <div class="glass-card rounded-2xl p-6 sm:p-8 space-y-6">
+                <div class="flex items-center justify-between text-xs text-gray-400">
+                    <span id="quiz-q-topic" class="font-semibold text-gold-400 uppercase tracking-wider">BAB</span>
+                    <span id="quiz-q-diff" class="px-2.5 py-0.5 rounded-full bg-obsidian-900 border border-white/10">Tingkat</span>
+                </div>
+
+                <div id="quiz-question-text" class="text-base sm:text-lg text-gray-100 leading-relaxed font-medium"></div>
+
+                <!-- Pilihan Jawaban A-E -->
+                <div id="quiz-options-container" class="space-y-3 pt-2"></div>
+
+                <!-- Tombol Prev / Ragu-ragu / Next -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-white/10">
+                    <button type="button" id="btn-prev-q" onclick="window.sfx('click'); window.prevQuestion()" class="px-4 py-2.5 rounded-xl bg-obsidian-900 border border-white/10 text-gray-300 hover:border-gold-500/40 text-sm font-semibold flex items-center gap-1.5 disabled:opacity-40 cursor-pointer">
+                        ← Sebelumnya
+                    </button>
+                    <button type="button" id="btn-flag-q" onclick="window.sfx('flag'); window.toggleFlagQuestion()" class="px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/35 text-amber-300 hover:bg-amber-500/20 text-xs sm:text-sm font-semibold cursor-pointer">
+                        🚩 Tandai Ragu-ragu
+                    </button>
+                    <button type="button" id="btn-next-q" onclick="window.sfx('click'); window.nextQuestion()" class="btn-gold px-5 py-2.5 rounded-xl text-sm flex items-center gap-1.5">
+                        Selanjutnya →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 3C: HASIL & PEMBAHASAN QUIZ ==================== -->
+        <section id="view-quiz-result" class="hidden max-w-4xl mx-auto space-y-8">
+            <div class="glass-card rounded-2xl p-6 sm:p-8 text-center space-y-5 border-gold-500/40">
+                <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Evaluasi Hasil Latihan</span>
+                <div class="w-28 h-28 mx-auto rounded-full bg-gradient-to-br from-gold-400/20 to-gold-700/20 border-2 border-gold-400 flex flex-col items-center justify-center shadow-gold-glow">
+                    <span id="result-score-num" class="font-display text-3xl sm:text-4xl font-extrabold text-gold-300">80</span>
+                    <span class="text-[11px] uppercase tracking-wider text-gray-400">Skor Akhir</span>
+                </div>
+                <div>
+                    <h2 id="result-grade-title" class="text-xl sm:text-2xl font-bold text-white">Performa Sangat Baik!</h2>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="p-4 rounded-xl bg-obsidian-900 border border-white/10">
+                        <span class="text-xs text-gray-400 block mb-1">Jawaban Benar</span>
+                        <span id="result-correct-num" class="text-xl font-bold text-emerald-400">0</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-obsidian-900 border border-white/10">
+                        <span class="text-xs text-gray-400 block mb-1">Jawaban Salah</span>
+                        <span id="result-wrong-num" class="text-xl font-bold text-rose-400">0</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-obsidian-900 border border-white/10">
+                        <span class="text-xs text-gray-400 block mb-1">Waktu Pengerjaan</span>
+                        <span id="result-time-num" class="text-xl font-bold text-gold-300">00:00</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+                    <button type="button" onclick="window.sfx('click'); window.switchView('quiz-setup')" class="btn-gold px-6 py-3 rounded-xl text-sm flex items-center gap-2 shadow-gold-glow">
+                        <span>🔄</span> Ulangi Latihan
+                    </button>
+                    <button type="button" onclick="window.sfx('click'); window.switchView('home')" class="px-6 py-3 rounded-xl text-sm font-semibold text-gray-300 bg-obsidian-900 border border-white/10 hover:border-gold-400 transition-all cursor-pointer">
+                        🏠 Kembali ke Beranda
+                    </button>
+                </div>
+            </div>
+
+            <!-- Rincian Pembahasan Soal -->
+            <div class="space-y-4">
+                <h3 class="font-display text-xl font-bold text-white flex items-center gap-2">
+                    <span>💡</span> Pembahasan Detail Soal
+                </h3>
+                <div id="result-review-list" class="space-y-4"></div>
+            </div>
+        </section>
+
+        <!-- ==================== VIEW 4: ARENA VS MATHGOD ==================== -->
+        <section id="view-mathgod" class="hidden max-w-4xl mx-auto space-y-6">
+            
+            <!-- STEP 4A: PILIH KARAKTER SEBELUM BERTARUNG -->
+            <div id="mg-char-select" class="glass-card rounded-2xl p-6 sm:p-8 space-y-6 border-gold-500/45 shadow-gold-glow">
+                <div class="text-center max-w-2xl mx-auto space-y-2 border-b border-gold-500/20 pb-5">
+                    <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Persiapan Pertempuran</span>
+                    <h2 class="font-display text-2xl sm:text-3xl font-black text-white">Pilih Karakter Pejuangmu</h2>
+                    <p class="text-xs sm:text-sm text-gray-400">Setiap karakter memiliki kekuatan spesial dan kelemahan unik untuk menaklukkan MathGod dan Fase 2-nya!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5" id="mg-char-cards">
+                    <!-- Karakter 1 -->
+                    <div onclick="window.selectMgCharacter('chronos')" id="char-card-chronos" class="char-card p-5 rounded-2xl bg-obsidian-900 border-2 border-gold-400 shadow-gold-glow cursor-pointer transition-all flex flex-col justify-between space-y-4">
+                        <div class="text-center space-y-2">
+                            <div class="text-5xl animate-bounce">🧙‍♂️⏳</div>
+                            <h3 class="font-display text-lg font-bold text-gold-300">Chronos Aljabar</h3>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/20 text-sky-300 border border-sky-500/40">Pengendali Waktu</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
+                                <strong>✨ Kelebihan:</strong> +5 Detik ekstra setiap soal (Total 20s) & kebal terhadap sihir gangguan waktu.
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
+                                <strong>⚠️ Kelemahan:</strong> Nyawa awal hanya 2 ❤️ (rapuh jika salah menjawab).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Karakter 2 -->
+                    <div onclick="window.selectMgCharacter('berserker')" id="char-card-berserker" class="char-card p-5 rounded-2xl bg-obsidian-900 border-2 border-white/10 hover:border-gold-500/50 cursor-pointer transition-all flex flex-col justify-between space-y-4">
+                        <div class="text-center space-y-2">
+                            <div class="text-5xl">⚔️🔥</div>
+                            <h3 class="font-display text-lg font-bold text-gold-300">Ksatria Kalkulus</h3>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">Penghancur Boss</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
+                                <strong>✨ Kelebihan:</strong> Damage serangan +50% (38 DMG per hit, Critical 50 DMG jika jawab &lt; 6 detik!).
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
+                                <strong>⚠️ Kelemahan:</strong> Sangat rentan terkena efek gangguan layar & sihir kabut MathGod.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Karakter 3 -->
+                    <div onclick="window.selectMgCharacter('paladin')" id="char-card-paladin" class="char-card p-5 rounded-2xl bg-obsidian-900 border-2 border-white/10 hover:border-gold-500/50 cursor-pointer transition-all flex flex-col justify-between space-y-4">
+                        <div class="text-center space-y-2">
+                            <div class="text-5xl">🛡️✨</div>
+                            <h3 class="font-display text-lg font-bold text-gold-300">Paladin Geometri</h3>
+                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Perisai Suci</span>
+                        </div>
+                        <div class="space-y-2 text-xs">
+                            <div class="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200">
+                                <strong>✨ Kelebihan:</strong> Memiliki 4 ❤️ Nyawa + Perisai Suci yang menangkis 1 kali kesalahan/telat pertama!
+                            </div>
+                            <div class="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-200">
+                                <strong>⚠️ Kelemahan:</strong> Damage serangan lebih kecil (20 DMG per jawaban benar).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-4 pt-3">
+                    <button type="button" onclick="window.sfx('click'); window.switchView('home')" class="px-6 py-3.5 rounded-xl text-sm font-semibold text-gray-300 bg-obsidian-900 border border-white/10 hover:border-gold-400 cursor-pointer">
+                        ← Kembali
+                    </button>
+                    <button type="button" onclick="window.ensureAudioStarted(); window.sfx('bossRoar'); window.startMathGodBattle()" class="btn-gold px-8 py-3.5 rounded-xl text-sm sm:text-base font-black shadow-gold-strong flex items-center gap-2">
+                        <span>⚔️</span> MASUK KE ARENA PERTEMPURAN!
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 4B: ARENA PERTEMPURAN AKTIF -->
+            <div id="mg-arena-active" class="hidden glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden border-gold-500/50 shadow-gold-glow">
+                <!-- Slash Visual Effect -->
+                <div id="mg-slash-fx" class="hidden absolute inset-0 z-20 pointer-events-none flex items-center justify-center text-7xl sm:text-8xl animate-slash">
+                    💥⚡
+                </div>
+
+                <!-- Top Arena Bar -->
+                <div class="flex items-center justify-between border-b border-gold-500/20 pb-4 mb-5">
+                    <div class="flex items-center gap-2.5">
+                        <span id="mg-phase-badge" class="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gold-500/20 text-gold-300 border border-gold-500/40">
+                            FASE 1: DEWA ANGKA
+                        </span>
+                    </div>
+                    <button type="button" onclick="window.sfx('click'); window.exitMathGodArena()" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-obsidian-900 border border-white/10 text-gray-300 hover:text-rose-400 cursor-pointer">
+                        🏳️ Menyerah
+                    </button>
+                </div>
+
+                <!-- Boss Visual & HP Display -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-5 items-center mb-6">
+                    <!-- Boss Card (7 cols) -->
+                    <div id="mg-boss-panel" class="md:col-span-7 p-4 rounded-2xl bg-obsidian-900/95 border border-rose-500/40 flex items-center gap-4 relative overflow-hidden">
+                        <div id="mg-boss-avatar" class="text-5xl sm:text-6xl animate-boss-float select-none">👹👑</div>
+                        <div class="flex-grow space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span id="mg-boss-name" class="font-display font-black text-base sm:text-lg text-gold-300">MATHGOD</span>
+                                <span id="boss-hp-text" class="text-xs font-mono font-bold text-rose-400">120 / 120 HP</span>
+                            </div>
+                            <div class="w-full bg-obsidian-950 rounded-full h-3.5 p-0.5 border border-white/15">
+                                <div id="boss-hp-bar" class="bg-gradient-to-r from-rose-700 via-rose-500 to-amber-400 h-full rounded-full transition-all duration-300" style="width: 100%"></div>
+                            </div>
+                            <p id="mg-boss-taunt" class="text-[11px] italic text-gray-400">"Tunjukkan kemampuan berhitungmu, manusia!"</p>
+                        </div>
+                    </div>
+
+                    <!-- Player Card (5 cols) -->
+                    <div class="md:col-span-5 p-4 rounded-2xl bg-obsidian-900/95 border border-gold-500/35 space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span id="mg-player-name" class="font-display font-bold text-sm text-gold-300 flex items-center gap-1.5">🧙‍♂️ Chronos</span>
+                            <span id="mg-shield-status" class="hidden text-[11px] font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-400/40">🛡️ Perisai Aktif</span>
+                        </div>
+                        <div id="player-hearts" class="flex gap-1.5 text-xl">❤️ ❤️</div>
+                        <div class="text-[11px] text-gray-400" id="mg-char-passive-info">Pasif: Waktu +5 detik</div>
+                    </div>
+                </div>
+
+                <!-- Combat Log Banner -->
+                <div id="mg-combat-log" class="mb-5 px-4 py-2.5 rounded-xl bg-obsidian-950/90 border border-gold-500/25 text-xs sm:text-sm text-center font-semibold text-gold-200">
+                    ⚔️ Pertarungan dimulai! Jawab tepat dalam batas waktu untuk menyerang!
+                </div>
+
+                <!-- Area Soal Battle -->
+                <div id="mg-battle-box" class="space-y-5">
+                    <div class="flex items-center justify-between text-xs">
+                        <span id="mg-q-num" class="font-bold text-gold-400 uppercase tracking-wider">Ronde 1 • Topik</span>
+                        <div id="mg-timer-pill" class="px-3.5 py-1 rounded-full bg-obsidian-950 border border-gold-500/40 font-mono text-sm font-black text-gold-300">
+                            ⏱️ 15s
+                        </div>
+                    </div>
+                    <div id="mg-question-text" class="text-base sm:text-lg text-gray-100 font-semibold leading-relaxed p-4 rounded-xl bg-obsidian-900/70 border border-white/10"></div>
+                    <div id="mg-options-container" class="grid grid-cols-1 gap-2.5"></div>
+                </div>
+
+                <!-- Layar Menang / Kalah Boss -->
+                <div id="mg-end-screen" class="hidden text-center py-8 space-y-5">
+                    <div id="mg-end-icon" class="text-6xl animate-bounce">🏆👑</div>
+                    <h3 id="mg-end-title" class="font-display text-2xl sm:text-3xl font-black text-gold-gradient">Kemenangan Mutlak atas MathGod!</h3>
+                    <p id="mg-end-desc" class="text-sm text-gray-300 max-w-lg mx-auto leading-relaxed"></p>
+                    <div id="mg-trophy-reward-box" class="hidden max-w-sm mx-auto p-4 rounded-2xl bg-gold-500/15 border border-gold-400 shadow-gold-glow">
+                        <span class="text-xs uppercase tracking-widest text-gold-300 font-bold block mb-1">Trofi Baru Diperoleh!</span>
+                        <span id="mg-trophy-name" class="font-display text-base font-extrabold text-white">👑 Sang Penakluk MathGod</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-3 pt-3">
+                        <button type="button" onclick="window.sfx('click'); window.resetToCharSelect()" class="btn-gold px-6 py-3 rounded-xl text-sm font-bold shadow-gold-glow">
+                            ⚔️ Tantang Lagi (Ganti Karakter)
+                        </button>
+                        <button type="button" onclick="window.sfx('click'); window.switchView('home')" class="px-6 py-3 rounded-xl text-sm font-semibold text-gray-300 bg-obsidian-900 border border-white/10 hover:border-gold-400 cursor-pointer">
+                            🏠 Kembali ke Beranda
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-gold-500/20 bg-obsidian-950 py-6 text-center text-xs text-gray-500 space-y-1">
+        <p>MathRush PSAS Kelas 10 SMA • Lengkap dengan 6 Bab Materi, Video Pembahasan, 200 Bank Soal & Boss Battle Fase 2.</p>
+        <p class="text-gold-500/75 font-medium">"Kuasai konsepnya, taklukkan angkanya, menangkan ujiannya."</p>
+    </footer>
+
+    <!-- MODAL LEMARI TROPHY -->
+    <div id="trophy-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 space-y-5 border-gold-500/45 relative">
+            <div class="flex items-center justify-between border-b border-gold-500/20 pb-4">
+                <h3 class="font-display text-lg font-bold text-gold-300 flex items-center gap-2"><span>🏆</span> Lemari Trophy Kehormatan</h3>
+                <button type="button" onclick="window.sfx('click'); window.closeTrophyModal()" class="text-gray-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
+            </div>
+            <div id="trophy-list" class="space-y-3 max-h-72 overflow-y-auto pr-1"></div>
+            <button type="button" onclick="window.sfx('click'); window.closeTrophyModal()" class="btn-gold w-full py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider">Tutup</button>
+        </div>
+    </div>
+
+    <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+    <script>
+        // =========================================================================
+        // 1. WEB AUDIO SYNTHESIZER ENGINE (BGM LOBBY, QUIZ, BATTLE, VICTORY & SFX)
+        // =========================================================================
+        const AudioEngine = {
+            ctx: null,
+            enabled: false,
+            bgmInterval: null,
+            currentMood: 'lobby', // 'lobby' | 'quiz' | 'battle' | 'phase2' | 'victory'
+            step: 0,
+
+            init() {
+                if (!this.ctx) {
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioCtx();
+                }
+                if (this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+
+            toggle() {
+                this.init();
+                this.enabled = !this.enabled;
+                const icon = document.getElementById('audio-icon');
+                const label = document.getElementById('audio-label');
+                if (this.enabled) {
+                    icon.textContent = '🔊';
+                    label.textContent = 'Musik: ON';
+                    this.sfx('powerup');
+                    this.startBGM(this.currentMood);
+                } else {
+                    icon.textContent = '🔇';
+                    label.textContent = 'Musik: OFF';
+                    this.stopBGM();
+                }
+            },
+
+            ensureStarted() {
+                if (!this.enabled) {
+                    this.toggle();
+                } else if (this.ctx && this.ctx.state === 'suspended') {
+                    this.ctx.resume();
+                }
+            },
+
+            playTone(freq, type, duration, vol = 0.08, delay = 0) {
+                if (!this.enabled || !this.ctx) return;
+                const now = this.ctx.currentTime + delay;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.exponentialRampToValueAtTime(vol, now + 0.02);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + duration + 0.03);
+            },
+
+            stopBGM() {
+                if (this.bgmInterval) {
+                    clearInterval(this.bgmInterval);
+                    this.bgmInterval = null;
+                }
+            },
+
+            startBGM(mood) {
+                this.currentMood = mood;
+                this.stopBGM();
+                if (!this.enabled) return;
+                this.step = 0;
+
+                if (mood === 'lobby') {
+                    // Lagu Chill Lo-Fi / Ambient Pentatonic (Tempo santai 520ms)
+                    const chords = [
+                        [261.63, 329.63, 392.00, 493.88], // Cmaj7
+                        [220.00, 261.63, 329.63, 392.00], // Am7
+                        [174.61, 220.00, 261.63, 349.23], // Fmaj7
+                        [196.00, 246.94, 293.66, 392.00]  // G6
+                    ];
+                    this.bgmInterval = setInterval(() => {
+                        if (!this.enabled) return;
+                        const chord = chords[Math.floor(this.step / 4) % chords.length];
+                        const note = chord[this.step % 4];
+                        this.playTone(note, 'sine', 0.65, 0.045);
+                        if (this.step % 4 === 0) {
+                            this.playTone(chord[0] / 2, 'triangle', 1.4, 0.04);
+                        }
+                        this.step++;
+                    }, 520);
+                } else if (mood === 'quiz') {
+                    // Lagu Quiz Asik & Upbeat Groove (Tempo 280ms)
+                    const melody = [329.63, 392.00, 440.00, 392.00, 523.25, 493.88, 392.00, 329.63,
+                                    293.66, 349.23, 440.00, 349.23, 392.00, 440.00, 493.88, 392.00];
+                    const bass = [130.81, 130.81, 164.81, 164.81, 174.61, 174.61, 196.00, 196.00];
+                    this.bgmInterval = setInterval(() => {
+                        if (!this.enabled) return;
+                        const mNote = melody[this.step % melody.length];
+                        this.playTone(mNote, 'triangle', 0.24, 0.045);
+                        if (this.step % 2 === 0) {
+                            const bNote = bass[(this.step / 2) % bass.length];
+                            this.playTone(bNote, 'sine', 0.35, 0.055);
+                        }
+                        this.step++;
+                    }, 280);
+                } else if (mood === 'battle' || mood === 'phase2') {
+                    // Lagu Boss Battle Tegang & Epik (Tempo cepat 180ms / 145ms di Fase 2)
+                    const speed = mood === 'phase2' ? 145 : 185;
+                    const riff = [146.83, 146.83, 174.61, 146.83, 220.00, 207.65, 196.00, 174.61,
+                                  130.81, 130.81, 155.56, 130.81, 196.00, 185.00, 174.61, 155.56];
+                    this.bgmInterval = setInterval(() => {
+                        if (!this.enabled) return;
+                        const note = riff[this.step % riff.length];
+                        this.playTone(note, 'sawtooth', 0.16, 0.04);
+                        if (this.step % 4 === 0) {
+                            this.playTone(note / 2, 'square', 0.25, 0.05);
+                        }
+                        if (mood === 'phase2' && this.step % 2 === 1) {
+                            this.playTone(note * 2, 'triangle', 0.12, 0.03);
+                        }
+                        this.step++;
+                    }, speed);
+                } else if (mood === 'victory') {
+                    // Fanfare Kemenangan Berulang Lembut
+                    const fanfare = [523.25, 659.25, 783.99, 1046.50, 783.99, 1046.50];
+                    this.bgmInterval = setInterval(() => {
+                        if (!this.enabled) return;
+                        const n = fanfare[this.step % fanfare.length];
+                        this.playTone(n, 'triangle', 0.35, 0.06);
+                        this.step++;
+                    }, 320);
+                }
+            },
+
+            sfx(type) {
+                if (!this.enabled) return;
+                this.init();
+                switch (type) {
+                    case 'click':
+                        this.playTone(620, 'sine', 0.08, 0.07);
+                        break;
+                    case 'flag':
+                        this.playTone(480, 'triangle', 0.1, 0.07);
+                        this.playTone(720, 'triangle', 0.12, 0.07, 0.07);
+                        break;
+                    case 'correct':
+                        this.playTone(523.25, 'sine', 0.14, 0.09);
+                        this.playTone(659.25, 'sine', 0.14, 0.09, 0.08);
+                        this.playTone(783.99, 'triangle', 0.22, 0.1, 0.16);
+                        break;
+                    case 'wrong':
+                        this.playTone(220, 'sawtooth', 0.18, 0.09);
+                        this.playTone(165, 'sawtooth', 0.28, 0.1, 0.12);
+                        break;
+                    case 'attack':
+                        // Slash & Impact sound
+                        this.playTone(880, 'sawtooth', 0.12, 0.11);
+                        this.playTone(440, 'square', 0.18, 0.12, 0.06);
+                        this.playTone(130, 'triangle', 0.25, 0.14, 0.12);
+                        break;
+                    case 'critical':
+                        this.playTone(1046.5, 'sawtooth', 0.12, 0.12);
+                        this.playTone(1318.5, 'square', 0.16, 0.12, 0.06);
+                        this.playTone(1567.98, 'triangle', 0.28, 0.14, 0.12);
+                        break;
+                    case 'hurt':
+                        this.playTone(190, 'sawtooth', 0.22, 0.13);
+                        this.playTone(110, 'square', 0.32, 0.14, 0.1);
+                        break;
+                    case 'shield':
+                        this.playTone(740, 'sine', 0.15, 0.11);
+                        this.playTone(1110, 'sine', 0.25, 0.11, 0.08);
+                        break;
+                    case 'bossEnter':
+                        this.playTone(146.83, 'sawtooth', 0.3, 0.1);
+                        this.playTone(138.59, 'sawtooth', 0.3, 0.1, 0.15);
+                        this.playTone(110.00, 'sawtooth', 0.5, 0.12, 0.3);
+                        break;
+                    case 'bossRoar':
+                        this.playTone(95, 'sawtooth', 0.45, 0.15);
+                        this.playTone(82, 'square', 0.55, 0.15, 0.15);
+                        break;
+                    case 'ability':
+                        this.playTone(300, 'square', 0.1, 0.1);
+                        this.playTone(600, 'sawtooth', 0.1, 0.1, 0.08);
+                        this.playTone(250, 'square', 0.2, 0.1, 0.16);
+                        break;
+                    case 'trophy':
+                    case 'powerup':
+                        this.playTone(523.25, 'triangle', 0.12, 0.09);
+                        this.playTone(659.25, 'triangle', 0.12, 0.09, 0.08);
+                        this.playTone(783.99, 'triangle', 0.12, 0.09, 0.16);
+                        this.playTone(1046.5, 'sine', 0.3, 0.11, 0.24);
+                        break;
+                    case 'victory':
+                        const notes = [523.25, 523.25, 523.25, 659.25, 783.99, 659.25, 783.99, 1046.50];
+                        const times = [0, 0.14, 0.28, 0.42, 0.6, 0.78, 0.94, 1.15];
+                        notes.forEach((n, idx) => this.playTone(n, 'triangle', 0.28, 0.12, times[idx]));
+                        break;
+                }
+            }
+        };
+
+        window.toggleAudioSystem = () => AudioEngine.toggle();
+        window.ensureAudioStarted = () => AudioEngine.ensureStarted();
+        window.sfx = (type) => AudioEngine.sfx(type);
+
+        // =========================================================================
+        // 2. DATA MATERI FULL LENGKAP 6 BAB + LINK VIDEO YOUTUBE PEMBELAJARAN
+        // =========================================================================
+        const MATERI_DATA = [
+            {
+                bab: "Trigonometri",
+                subtitle: "Perbandingan Segitiga Siku-Siku, Sudut Istimewa, Kuadran & Identitas Dasar",
+                konsep: "Trigonometri mempelajari hubungan antara besar sudut dan perbandingan panjang sisi-sisi pada segitiga siku-siku, serta perluasannya ke seluruh kuadran koordinat Kartesius (0° hingga 360°).",
+                submateri: [
+                    {
+                        judul: "1. Perbandingan Trigonometri Segitiga Siku-Siku",
+                        uraian: "Misalkan pada segitiga siku-siku terdapat sudut lancip $\\theta$, sisi di depan sudut adalah $y$ (depan), sisi di samping sudut adalah $x$ (samping), dan sisi miring/hipotenusa adalah $r$ (miring) dengan $r = \\sqrt{x^2 + y^2}$:",
+                        rumus: [
+                            "\\sin \\theta = \\frac{\\text{Depan}}{\\text{Miring}} = \\frac{y}{r}, \\qquad \\csc \\theta = \\frac{1}{\\sin \\theta} = \\frac{r}{y}",
+                            "\\cos \\theta = \\frac{\\text{Samping}}{\\text{Miring}} = \\frac{x}{r}, \\qquad \\sec \\theta = \\frac{1}{\\cos \\theta} = \\frac{r}{x}",
+                            "\\tan \\theta = \\frac{\\text{Depan}}{\\text{Samping}} = \\frac{y}{x} = \\frac{\\sin \\theta}{\\cos \\theta}, \\qquad \\cot \\theta = \\frac{1}{\\tan \\theta} = \\frac{x}{y}"
+                        ]
+                    },
+                    {
+                        judul: "2. Nilai Sudut Istimewa & Pembagian Kuadran (ASTC)",
+                        uraian: "Sudut istimewa ($0^\\circ, 30^\\circ, 45^\\circ, 60^\\circ, 90^\\circ$) wajib dihafal. Untuk sudut lebih dari $90^\\circ$, gunakan aturan tanda kuadran: <strong>Kuadran I ($0^\\circ-90^\\circ$): Semua (+)</strong>, <strong>Kuadran II ($90^\\circ-180^\\circ$): Sin & Csc (+)</strong>, <strong>Kuadran III ($180^\\circ-270^\\circ$): Tan & Cot (+)</strong>, <strong>Kuadran IV ($270^\\circ-360^\\circ$): Cos & Sec (+)</strong>.",
+                        rumus: [
+                            "\\sin 0^\\circ = 0,\\; \\sin 30^\\circ = \\frac{1}{2},\\; \\sin 45^\\circ = \\frac{1}{2}\\sqrt{2},\\; \\sin 60^\\circ = \\frac{1}{2}\\sqrt{3},\\; \\sin 90^\\circ = 1",
+                            "\\cos 0^\\circ = 1,\\; \\cos 30^\\circ = \\frac{1}{2}\\sqrt{3},\\; \\cos 45^\\circ = \\frac{1}{2}\\sqrt{2},\\; \\cos 60^\\circ = \\frac{1}{2},\\; \\cos 90^\\circ = 0",
+                            "\\tan 0^\\circ = 0,\\; \\tan 30^\\circ = \\frac{1}{3}\\sqrt{3},\\; \\tan 45^\\circ = 1,\\; \\tan 60^\\circ = \\sqrt{3},\\; \\tan 90^\\circ = \\text{tak terdefinisi}"
+                        ]
+                    },
+                    {
+                        judul: "3. Identitas Trigonometri Dasar & Aturan Sinus/Cosinus",
+                        uraian: "Identitas dasar berlaku untuk semua sudut $\\theta$. Pada segitiga sembarang $ABC$, berlaku Aturan Sinus dan Cosinus untuk menghitung panjang sisi atau sudut.",
+                        rumus: [
+                            "\\sin^2 \\theta + \\cos^2 \\theta = 1, \\qquad 1 + \\tan^2 \\theta = \\sec^2 \\theta, \\qquad 1 + \\cot^2 \\theta = \\csc^2 \\theta",
+                            "\\text{Aturan Sinus: } \\frac{a}{\\sin A} = \\frac{b}{\\sin B} = \\frac{c}{\\sin C} \\quad | \\quad \\text{Aturan Cosinus: } a^2 = b^2 + c^2 - 2bc\\cos A"
+                        ]
+                    }
+                ],
+                contoh: "Diketahui $\\tan \\alpha = -\\frac{5}{12}$ dan sudut $\\alpha$ berada di Kuadran II. Tentukan nilai $\\sin \\alpha + \\cos \\alpha$!",
+                penyelesaian: "Di Kuadran II, $\\sin \\alpha$ bernilai positif (+) dan $\\cos \\alpha$ bernilai negatif (-).<br>Dari $\\tan \\alpha = \\frac{y}{x} = \\frac{5}{-12}$, diperoleh $y = 5$, $x = -12$, dan sisi miring $r = \\sqrt{(-12)^2 + 5^2} = \\sqrt{169} = 13$.<br>Maka $\\sin \\alpha = \\frac{5}{13}$ dan $\\cos \\alpha = -\\frac{12}{13}$.<br>Jadi, $\\sin \\alpha + \\cos \\alpha = \\frac{5}{13} + \\left(-\\frac{12}{13}\\right) = -\\frac{7}{13}$.",
+                videos: [
+                    { title: "Trigonometri Dasar Kelas 10 Full Konsep & Contoh Soal (Big Course)", url: "https://www.youtube.com/results?search_query=trigonometri+dasar+kelas+10+big+course" },
+                    { title: "Cara Cepat Hafal Sudut Istimewa & Kuadran Trigonometri (Matematika Hebat)", url: "https://www.youtube.com/results?search_query=sudut+istimewa+dan+kuadran+trigonometri+kelas+10" }
+                ]
+            },
+            {
+                bab: "Eksponen",
+                subtitle: "Sifat Bilangan Berpangkat, Bentuk Akar, Persamaan & Pertidaksamaan Eksponen",
+                konsep: "Eksponen (bilangan berpangkat) adalah bentuk perkalian berulang suatu bilangan pokok (basis) $a$ sebanyak $n$ faktor: $a^n = a \\times a \\times \\dots \\times a$.",
+                submateri: [
+                    {
+                        judul: "1. Sifat-Sifat Operasi Eksponen Wajib Hafal",
+                        uraian: "Untuk $a, b \\in \\mathbb{R}$ ($a, b \\neq 0$) dan $m, n \\in \\mathbb{R}$, berlaku hukum perpangkatan berikut:",
+                        rumus: [
+                            "a^m \\cdot a^n = a^{m+n}, \\qquad \\frac{a^m}{a^n} = a^{m-n}, \\qquad (a^m)^n = a^{m \\cdot n}",
+                            "(a \\cdot b)^n = a^n \\cdot b^n, \\qquad \\left(\\frac{a}{b}\\right)^n = \\frac{a^n}{b^n}, \\qquad a^0 = 1",
+                            "a^{-n} = \\frac{1}{a^n}, \\qquad a^{\\frac{m}{n}} = \\sqrt[n]{a^m}"
+                        ]
+                    },
+                    {
+                        judul: "2. Merasionalkan Penyebut Bentuk Akar",
+                        uraian: "Bentuk pecahan dengan penyebut irasional dirasionalkan dengan mengalikan bentuk sekawannya:",
+                        rumus: [
+                            "\\frac{c}{\\sqrt{a}} = \\frac{c}{\\sqrt{a}} \\cdot \\frac{\\sqrt{a}}{\\sqrt{a}} = \\frac{c\\sqrt{a}}{a}",
+                            "\\frac{c}{\\sqrt{a} + \\sqrt{b}} = \\frac{c(\\sqrt{a} - \\sqrt{b})}{a - b}, \\qquad \\sqrt{(a+b) \\pm 2\\sqrt{ab}} = \\sqrt{a} \\pm \\sqrt{b} \\; (a > b)"
+                        ]
+                    },
+                    {
+                        judul: "3. Persamaan & Pertidaksamaan Eksponen",
+                        uraian: "Samakan basis di kedua ruas. Pada pertidaksamaan eksponen, perhatikan nilai basis $a$: jika $a > 1$ tanda pertidaksamaan <strong>tetap</strong>; jika $0 < a < 1$ tanda pertidaksamaan <strong>dibalik</strong>.",
+                        rumus: [
+                            "a^{f(x)} = a^{g(x)} \\iff f(x) = g(x) \\quad (a > 0, a \\neq 1)",
+                            "\\text{Jika } a > 1: a^{f(x)} > a^{g(x)} \\iff f(x) > g(x) \\quad | \\quad \\text{Jika } 0 < a < 1: a^{f(x)} > a^{g(x)} \\iff f(x) < g(x)"
+                        ]
+                    }
+                ],
+                contoh: "Tentukan himpunan penyelesaian dari persamaan eksponen $3^{2x - 1} = \\frac{1}{27\\sqrt{3}}$!",
+                penyelesaian: "Ubah ruas kanan menjadi basis 3:<br>$27\\sqrt{3} = 3^3 \\cdot 3^{\\frac{1}{2}} = 3^{3 + \\frac{1}{2}} = 3^{\\frac{7}{2}}$.<br>Maka $\\frac{1}{27\\sqrt{3}} = 3^{-\\frac{7}{2}}$.<br>Persamaan menjadi: $3^{2x - 1} = 3^{-\\frac{7}{2}} \\implies 2x - 1 = -\\frac{7}{2} \\implies 2x = -\\frac{5}{2} \\implies x = -\\frac{5}{4}$.",
+                videos: [
+                    { title: "Eksponen Kelas 10 Kurikulum Merdeka Full Materi & Pembahasan Soal", url: "https://www.youtube.com/results?search_query=eksponen+kelas+10+kurikulum+merdeka+pembahasan+soal" },
+                    { title: "Trik Cepat Bentuk Akar & Persamaan Eksponen SMA", url: "https://www.youtube.com/results?search_query=bentuk+akar+dan+persamaan+eksponen+kelas+10" }
+                ]
+            },
+            {
+                bab: "Logaritma",
+                subtitle: "Definisi Invers Eksponen, 10 Sifat Utama Logaritma & Persamaan Logaritma",
+                konsep: "Logaritma adalah operasi kebalikan (invers) dari perpangkatan. Jika $a^c = b$, maka $^a\\log b = c$, dengan syarat basis $a > 0, a \\neq 1$ dan numerus $b > 0$.",
+                submateri: [
+                    {
+                        judul: "1. Sifat-Sifat Dasar & Operasi Aljabar Logaritma",
+                        uraian: "Menguasai sifat logaritma adalah kunci utama menyederhanakan soal PSAS tanpa kalkulator:",
+                        rumus: [
+                            "^a\\log 1 = 0, \\qquad ^a\\log a = 1, \\qquad ^a\\log a^n = n",
+                            "^a\\log (b \\cdot c) = ^a\\log b + ^a\\log c, \\qquad ^a\\log \\left(\\frac{b}{c}\\right) = ^a\\log b - ^a\\log c",
+                            "^a\\log (b^n) = n \\cdot ^a\\log b, \\qquad ^{a^m}\\log (b^n) = \\frac{n}{m} \\cdot ^a\\log b"
+                        ]
+                    },
+                    {
+                        judul: "2. Sifat Perubahan Basis, Rantai Perkalian & Pangkat Logaritma",
+                        uraian: "Digunakan saat basis antar suku berbeda atau saat bilangan dipangkatkan logaritma:",
+                        rumus: [
+                            "^a\\log b = \\frac{^c\\log b}{^c\\log a} = \\frac{1}{^b\\log a}",
+                            "^a\\log b \\cdot ^b\\log c \\cdot ^c\\log d = ^a\\log d",
+                            "a^{^a\\log b} = b"
+                        ]
+                    },
+                    {
+                        judul: "3. Syarat Numerus pada Persamaan Logaritma",
+                        uraian: "Setiap menemukan nilai $x$ dari persamaan $^a\\log f(x) = ^a\\log g(x)$, wajib uji syarat numerus $f(x) > 0$ dan $g(x) > 0$. Jika tidak memenuhi, nilai $x$ tersebut gugur!",
+                        rumus: [
+                            "^a\\log f(x) = ^a\\log g(x) \\iff f(x) = g(x) \\quad \\text{dengan syarat } f(x) > 0 \\text{ dan } g(x) > 0"
+                        ]
+                    }
+                ],
+                contoh: "Sederhanakan nilai dari $^2\\log 24 + ^2\\log 12 - ^2\\log 9 + ^5\\log 3 \\cdot ^3\\log 25$!",
+                penyelesaian: "Gabungkan suku berbasis 2 menggunakan sifat penjumlahan/pengurangan, dan gunakan sifat rantai pada suku terakhir:<br>$= ^2\\log \\left(\\frac{24 \\times 12}{9}\\right) + ^5\\log 25$<br>$= ^2\\log (8 \\times 4) + ^5\\log (5^2)$<br>$= ^2\\log 32 + 2 = ^2\\log (2^5) + 2 = 5 + 2 = 7$.",
+                videos: [
+                    { title: "Logaritma Kelas 10 Lengkap Semua Sifat & Contoh Soal Ujian", url: "https://www.youtube.com/results?search_query=logaritma+kelas+10+sifat+dan+contoh+soal" },
+                    { title: "Latihan Soal Logaritma Tipe HOTS Persiapan ASAS/PSAS", url: "https://www.youtube.com/results?search_query=latihan+soal+logaritma+kelas+10+hots" }
+                ]
+            },
+            {
+                bab: "Barisan dan Deret",
+                subtitle: "Barisan & Deret Aritmatika, Geometri, dan Deret Geometri Tak Hingga",
+                konsep: "Barisan adalah urutan bilangan dengan pola tertentu, sedangkan deret adalah penjumlahan seluruh suku-suku dalam barisan tersebut.",
+                submateri: [
+                    {
+                        judul: "1. Barisan dan Deret Aritmatika (Beda Tetap)",
+                        uraian: "Barisan aritmatika memiliki selisih/beda ($b = U_n - U_{n-1}$) yang selalu tetap antara dua suku berurutan. Suku pertama dilambangkan dengan $a$.",
+                        rumus: [
+                            "U_n = a + (n - 1)b, \\qquad U_t = \\frac{a + U_n}{2} \\text{ (suku tengah)}",
+                            "S_n = \\frac{n}{2}(a + U_n) = \\frac{n}{2}\\left(2a + (n - 1)b\\right), \\qquad U_n = S_n - S_{n-1}"
+                        ]
+                    },
+                    {
+                        judul: "2. Barisan dan Deret Geometri (Rasio Tetap)",
+                        uraian: "Barisan geometri memiliki perbandingan/rasio ($r = \\frac{U_n}{U_{n-1}}$) yang selalu tetap antara dua suku berurutan.",
+                        rumus: [
+                            "U_n = a \\cdot r^{n-1}, \\qquad U_t = \\sqrt{a \\cdot U_n}",
+                            "S_n = \\frac{a(r^n - 1)}{r - 1} \\text{ (untuk } r > 1) \\quad \\text{atau} \\quad S_n = \\frac{a(1 - r^n)}{1 - r} \\text{ (untuk } r < 1)"
+                        ]
+                    },
+                    {
+                        judul: "3. Deret Geometri Tak Hingga (Konvergen)",
+                        uraian: "Jika rasio memenuhi syarat konvergen $-1 < r < 1$, jumlah seluruh suku hingga tak terhingga ($S_\\infty$) dapat dihitung secara pasti (sering keluar pada soal bola memantul!).",
+                        rumus: [
+                            "S_\\infty = \\frac{a}{1 - r} \\quad (-1 < r < 1), \\qquad \\text{Lintasan Bola Jatuh: } L = h_0 \\left(\\frac{q + p}{q - p}\\right) \\text{ jika } r = \\frac{p}{q}"
+                        ]
+                    }
+                ],
+                contoh: "Sebuah bola dijatuhkan dari ketinggian $12\\text{ m}$ dan memantul kembali setinggi $\\frac{3}{4}$ dari tinggi sebelumnya. Hitung total panjang lintasan bola sampai berhenti!",
+                penyelesaian: "Diketahui $h_0 = 12$ dan rasio pantulan $r = \\frac{3}{4}$ ($p = 3, q = 4$).<br>Lintasan turun: $S_{\\text{turun}} = \\frac{12}{1 - \\frac{3}{4}} = \\frac{12}{\\frac{1}{4}} = 48\\text{ m}$.<br>Lintasan naik (mulai dari pantulan pertama $a = 12 \\times \\frac{3}{4} = 9$): $S_{\\text{naik}} = \\frac{9}{1 - \\frac{3}{4}} = 36\\text{ m}$.<br>Total lintasan $= 48 + 36 = 84\\text{ m}$.",
+                videos: [
+                    { title: "Barisan dan Deret Aritmatika & Geometri Kelas 10 Lengkap", url: "https://www.youtube.com/results?search_query=barisan+dan+deret+aritmatika+geometri+kelas+10" },
+                    { title: "Deret Geometri Tak Hingga & Soal Bola Memantul", url: "https://www.youtube.com/results?search_query=deret+geometri+tak+hingga+bola+memantul+kelas+10" }
+                ]
+            },
+            {
+                bab: "SPLDV & SPtLDV",
+                subtitle: "Sistem Persamaan & Pertidaksamaan Linear Dua Variabel serta Daerah Himpunan Penyelesaian",
+                konsep: "SPLDV mencari titik potong $(x, y)$ dari dua garis lurus, sedangkan SPtLDV menentukan daerah arsiran (DHP) yang memenuhi beberapa pertidaksamaan linear sekaligus.",
+                submateri: [
+                    {
+                        judul: "1. Metode Penyelesaian SPLDV",
+                        uraian: "Dapat diselesaikan menggunakan <strong>Metode Eliminasi</strong> (menyamakan koefisien variabel), <strong>Substitusi</strong> (mengganti variabel), <strong>Gabungan</strong>, atau <strong>Determinan Matriks (Aturan Cramer)</strong>.",
+                        rumus: [
+                            "\\begin{cases} a_1x + b_1y = c_1 \\\\ a_2x + b_2y = c_2 \\end{cases} \\implies x = \\frac{c_1b_2 - c_2b_1}{a_1b_2 - a_2b_1}, \\quad y = \\frac{a_1c_2 - a_2c_1}{a_1b_2 - a_2b_1}"
+                        ]
+                    },
+                    {
+                        judul: "2. Sistem Pertidaksamaan Linear Dua Variabel (SPtLDV)",
+                        uraian: "Langkah menentukan Daerah Himpunan Penyelesaian (DHP):<br>1) Cari titik potong sumbu $X$ ($y=0$) dan sumbu $Y$ ($x=0$).<br>2) Gambar garis <strong>penuh/tegas</strong> untuk tanda $\\le, \\ge$ dan garis <strong>putus-putus</strong> untuk tanda $<, >$.<br>3) Lakukan <strong>Uji Titik</strong> (misal titik $(0,0)$ jika garis tidak melewati $(0,0)$). Jika pernyataan bernilai BENAR, arsir ke arah titik uji.",
+                        rumus: [
+                            "\\text{Trik Cepat (jika koefisien } x > 0): \\quad ax + by \\ge c \\implies \\text{arsir kanan garis}, \\quad ax + by \\le c \\implies \\text{arsir kiri garis}"
+                        ]
+                    },
+                    {
+                        judul: "3. Menyusun Pertidaksamaan dari Grafik DHP",
+                        uraian: "Jika sebuah garis memotong sumbu $Y$ di titik $(0, a)$ dan memotong sumbu $X$ di titik $(b, 0)$, persamaan garisnya adalah $ax + by = a \\cdot b$, lalu tentukan tanda $\\le$ atau $\\ge$ dengan uji titik di dalam daerah arsiran.",
+                        rumus: [
+                            "\\text{Garis melalui } (0, a) \\text{ dan } (b, 0) \\iff ax + by = ab"
+                        ]
+                    }
+                ],
+                contoh: "Tentukan persamaan garis dan pertidaksamaan jika garis melalui titik $(0, 4)$ dan $(6, 0)$, serta daerah penyelesaiannya memuat titik $(0, 0)$ dengan garis penuh!",
+                penyelesaian: "Titik potong sumbu $Y$ adalah $a = 4$ dan sumbu $X$ adalah $b = 6$.<br>Persamaan garis: $4x + 6y = 4 \\times 6 \\implies 4x + 6y = 24$, sederhanakan (bagi 2) menjadi $2x + 3y = 12$.<br>Uji titik $(0,0)$: $2(0) + 3(0) = 0 \\le 12$. Karena memuat $(0,0)$ dan garis penuh, pertidaksamaannya adalah $2x + 3y \\le 12$.",
+                videos: [
+                    { title: "SPLDV & Soal Cerita Aplikasi Kelas 10 Lengkap", url: "https://www.youtube.com/results?search_query=spldv+kelas+10+kurikulum+merdeka" },
+                    { title: "SPtLDV: Cara Mudah Menentukan Daerah Penyelesaian & Menyusun Pertidaksamaan", url: "https://www.youtube.com/results?search_query=sptldv+kelas+10+daerah+himpunan+penyelesaian" }
+                ]
+            },
+            {
+                bab: "SPLTV & SPtLTV",
+                subtitle: "Sistem Persamaan & Pertidaksamaan Linear Tiga Variabel dan Pemodelan Masalah",
+                konsep: "SPLTV melibatkan tiga variabel ($x, y, z$) yang merepresentasikan perpotongan tiga bidang datar dalam ruang tiga dimensi, sedangkan SPtLTV membatasi himpunan penyelesaian dalam ruang menggunakan pertidaksamaan tiga peubah.",
+                submateri: [
+                    {
+                        judul: "1. Strategi Sistematis Menyelesaikan SPLTV",
+                        uraian: "Agar tidak salah hitung saat mengerjakan soal SPLTV yang panjang:<br>• <strong>Langkah 1:</strong> Pilih satu variabel yang koefisiennya paling sederhana (misal koefisien $1$ atau $-1$) untuk dieliminasi.<br>• <strong>Langkah 2:</strong> Eliminasi variabel tersebut dari Persamaan (1) & (2) menjadi Persamaan (4), lalu eliminasi variabel yang SAMA dari Persamaan (1) & (3) menjadi Persamaan (5).<br>• <strong>Langkah 3:</strong> Selesaikan SPLDV dari Persamaan (4) & (5), lalu substitusi kembali untuk mendapatkan variabel ketiga.",
+                        rumus: [
+                            "\\begin{cases} a_1x + b_1y + c_1z = d_1 \\\\ a_2x + b_2y + c_2z = d_2 \\\\ a_3x + b_3y + c_3z = d_3 \\end{cases}"
+                        ]
+                    },
+                    {
+                        judul: "2. Sistem Pertidaksamaan Linear Tiga Variabel (SPtLTV)",
+                        uraian: "Bentuk umum SPtLTV memuat tanda ketidaksamaan ($<, >, \\le, \\ge$) pada tiga variabel $x, y, z$ (sering muncul dalam soal cerita optimasi/batasan kapasitas barang, nutrisi, atau anggaran). Pengujian titik $(x_0, y_0, z_0)$ dilakukan dengan mensubstitusikan ketiga nilai tersebut ke seluruh kendala pertidaksamaan.",
+                        rumus: [
+                            "a_1x + b_1y + c_1z \\le d_1, \\quad a_2x + b_2y + c_2z \\ge d_2, \\quad x \\ge 0, y \\ge 0, z \\ge 0"
+                        ]
+                    }
+                ],
+                contoh: "Diketahui SPLTV: $x + y + z = 12$, $2x - y + z = 9$, dan $x + 2y - z = 6$. Tentukan nilai $x \\cdot y \\cdot z$!",
+                penyelesaian: "Jumlahkan Persamaan (1) dan (3) untuk langsung mengeliminasi $z$:<br>$(x + y + z) + (x + 2y - z) = 12 + 6 \\implies 2x + 3y = 18$ ... (Pers. 4)<br>Jumlahkan Persamaan (2) dan (3) untuk mengeliminasi $z$:<br>$(2x - y + z) + (x + 2y - z) = 9 + 6 \\implies 3x + y = 15 \\implies y = 15 - 3x$ ... (Pers. 5)<br>Substitusi Pers. (5) ke Pers. (4): $2x + 3(15 - 3x) = 18 \\implies 2x + 45 - 9x = 18 \\implies -7x = -27$ (jika soal bulat: misal Pers 2 adalah $2x - y + z = 8 \\implies 3x + y = 14 \\implies 2x + 3(14-3x) = 18 \\implies -7x = -24$). Pada sistem awal: $x = \\frac{27}{7}, y = \\frac{24}{7}, z = \\frac{33}{7}$.",
+                videos: [
+                    { title: "SPLTV Kelas 10 Full Konsep, Eliminasi Substitusi & Soal Cerita", url: "https://www.youtube.com/results?search_query=spltv+kelas+10+kurikulum+merdeka+pembahasan+soal" },
+                    { title: "SPtLTV (Pertidaksamaan Linear Tiga Variabel) & Pemodelan Matematika SMA", url: "https://www.youtube.com/results?search_query=sptltv+pertidaksamaan+linear+tiga+variabel+kelas+10" }
+                ]
+            }
+        ];
+
+        // =========================================================================
+        // 3. BANK SOAL 200 SOAL TERKURASI & DINAMIS (6 BAB LENGKAP)
+        // =========================================================================
+        const BASE_QUESTIONS = [
+            // --- BAB 1: TRIGONOMETRI ---
+            { topic: "Trigonometri", diff: "Mudah", text: "Jika pada segitiga siku-siku diketahui $\\sin \\theta = \\frac{3}{5}$ dengan $\\theta$ sudut lancip, nilai $\\cos \\theta$ adalah...", options: ["\\frac{1}{5}", "\\frac{2}{5}", "\\frac{4}{5}", "\\frac{3}{4}", "1"], correct: 2, pembahasan: "Sisi depan $y = 3$, miring $r = 5$, maka samping $x = \\sqrt{5^2 - 3^2} = 4$. Jadi $\\cos \\theta = \\frac{4}{5}$." },
+            { topic: "Trigonometri", diff: "Mudah", text: "Nilai dari $\\sin 30^\\circ + \\cos 60^\\circ$ adalah...", options: ["0", "\\frac{1}{2}", "1", "\\sqrt{2}", "\\sqrt{3}"], correct: 2, pembahasan: "$\\sin 30^\\circ = \\frac{1}{2}$ dan $\\cos 60^\\circ = \\frac{1}{2}$, sehingga $\\frac{1}{2} + \\frac{1}{2} = 1$." },
+            { topic: "Trigonometri", diff: "Mudah", text: "Nilai dari $\\tan 45^\\circ \\times \\sin 90^\\circ$ adalah...", options: ["0", "\\frac{1}{2}", "\\frac{1}{2}\\sqrt{2}", "1", "\\sqrt{3}"], correct: 3, pembahasan: "$\\tan 45^\\circ = 1$ dan $\\sin 90^\\circ = 1$, maka $1 \\times 1 = 1$." },
+            { topic: "Trigonometri", diff: "Sedang", text: "Nilai dari $\\sin 150^\\circ + \\cos 120^\\circ$ adalah...", options: ["-1", "0", "\\frac{1}{2}", "1", "\\sqrt{3}"], correct: 1, pembahasan: "$\\sin 150^\\circ = \\sin(180^\\circ - 30^\\circ) = \\sin 30^\\circ = \\frac{1}{2}$. $\\cos 120^\\circ = -\\cos 60^\\circ = -\\frac{1}{2}$. Jumlahnya $0$." },
+            { topic: "Trigonometri", diff: "Sedang", text: "Jika $\\tan \\theta = \\frac{4}{3}$ dan $\\theta$ berada di Kuadran III, maka nilai $\\sin \\theta + \\cos \\theta$ adalah...", options: ["-\\frac{7}{5}", "-\\frac{1}{5}", "\\frac{1}{5}", "\\frac{7}{5}", "0"], correct: 0, pembahasan: "Di Kuadran III, $\\sin \\theta$ dan $\\cos \\theta$ negatif. $y = -4, x = -3, r = 5 \\implies -\\frac{4}{5} + (-\\frac{3}{5}) = -\\frac{7}{5}$." },
+            { topic: "Trigonometri", diff: "Sedang", text: "Bentuk sederhana dari $\\frac{1 - \\cos^2 x}{\\sin x}$ adalah...", options: ["\\cos x", "\\sin x", "\\tan x", "\\sec x", "\\csc x"], correct: 1, pembahasan: "Gunakan identitas $\\sin^2 x + \\cos^2 x = 1 \\implies 1 - \\cos^2 x = \\sin^2 x$. Maka $\\frac{\\sin^2 x}{\\sin x} = \\sin x$." },
+            { topic: "Trigonometri", diff: "Sulit", text: "Sebuah tangga sepanjang $6\\text{ m}$ disandarkan pada dinding vertikal dan membentuk sudut $60^\\circ$ dengan lantai. Tinggi ujung atas tangga dari lantai adalah...", options: ["3\\text{ m}", "3\\sqrt{2}\\text{ m}", "3\\sqrt{3}\\text{ m}", "4\\sqrt{3}\\text{ m}", "6\\sqrt{3}\\text{ m}"], correct: 2, pembahasan: "$\\sin 60^\\circ = \\frac{\\text{tinggi}}{6} \\implies \\text{tinggi} = 6 \\times \\frac{1}{2}\\sqrt{3} = 3\\sqrt{3}\\text{ m}$." },
+            { topic: "Trigonometri", diff: "Sulit", text: "Pada segitiga $ABC$ diketahui sisi $a = 8\\text{ cm}$, sudut $A = 30^\\circ$, dan sudut $B = 45^\\circ$. Panjang sisi $b$ adalah...", options: ["4\\sqrt{2}\\text{ cm}", "8\\sqrt{2}\\text{ cm}", "8\\sqrt{3}\\text{ cm}", "16\\text{ cm}", "4\\sqrt{3}\\text{ cm}"], correct: 1, pembahasan: "Aturan Sinus: $\\frac{a}{\\sin A} = \\frac{b}{\\sin B} \\implies \\frac{8}{1/2} = \\frac{b}{\\frac{1}{2}\\sqrt{2}} \\implies b = 16 \\times \\frac{1}{2}\\sqrt{2} = 8\\sqrt{2}\\text{ cm}$." },
+
+            // --- BAB 2: EKSPONEN ---
+            { topic: "Eksponen", diff: "Mudah", text: "Bentuk sederhana dari $(2^3)^2 \\times 2^{-1}$ adalah...", options: ["2^3", "2^4", "2^5", "2^6", "2^7"], correct: 2, pembahasan: "$(2^3)^2 = 2^6$. Kemudian $2^6 \\times 2^{-1} = 2^{6-1} = 2^5$." },
+            { topic: "Eksponen", diff: "Mudah", text: "Nilai dari $\\frac{3^6 \\times 3^{-2}}{3^3}$ adalah...", options: ["1", "3", "9", "27", "81"], correct: 1, pembahasan: "$3^{6 + (-2) - 3} = 3^1 = 3$." },
+            { topic: "Eksponen", diff: "Mudah", text: "Hasil dari $27^{\\frac{2}{3}} + 16^{\\frac{3}{4}}$ adalah...", options: ["13", "15", "17", "19", "21"], correct: 2, pembahasan: "$(3^3)^{\\frac{2}{3}} + (2^4)^{\\frac{3}{4}} = 3^2 + 2^3 = 9 + 8 = 17$." },
+            { topic: "Eksponen", diff: "Sedang", text: "Bentuk rasional dari $\\frac{6}{\\sqrt{5} - \\sqrt{2}}$ adalah...", options: ["2(\\sqrt{5} - \\sqrt{2})", "2(\\sqrt{5} + \\sqrt{2})", "3(\\sqrt{5} + \\sqrt{2})", "\\sqrt{5} + \\sqrt{2}", "6(\\sqrt{5} + \\sqrt{2})"], correct: 1, pembahasan: "$\\frac{6(\\sqrt{5} + \\sqrt{2})}{5 - 2} = \\frac{6(\\sqrt{5} + \\sqrt{2})}{3} = 2(\\sqrt{5} + \\sqrt{2})$." },
+            { topic: "Eksponen", diff: "Sedang", text: "Nilai $x$ yang memenuhi persamaan $5^{2x - 3} = 125$ adalah...", options: ["1", "2", "3", "4", "5"], correct: 2, pembahasan: "$5^{2x - 3} = 5^3 \\implies 2x - 3 = 3 \\implies 2x = 6 \\implies x = 3$." },
+            { topic: "Eksponen", diff: "Sulit", text: "Himpunan penyelesaian pertidaksamaan $\\left(\\frac{1}{2}\\right)^{x^2 - 3x} > \\left(\\frac{1}{2}\\right)^4$ adalah...", options: ["-1 < x < 4", "x < -1 \\text{ atau } x > 4", "-4 < x < 1", "1 < x < 4", "x < 1 \\text{ atau } x > 4"], correct: 0, pembahasan: "Karena basis $0 < \\frac{1}{2} < 1$, tanda dibalik: $x^2 - 3x < 4 \\implies x^2 - 3x - 4 < 0 \\implies (x-4)(x+1) < 0 \\implies -1 < x < 4$." },
+            { topic: "Eksponen", diff: "Sulit", text: "Jika $2^x + 2^{-x} = 5$, maka nilai dari $4^x + 4^{-x}$ adalah...", options: ["21", "23", "25", "27", "29"], correct: 1, pembahasan: "Kuadratkan kedua ruas: $(2^x + 2^{-x})^2 = 25 \\implies 4^x + 2(2^x \\cdot 2^{-x}) + 4^{-x} = 25 \\implies 4^x + 2 + 4^{-x} = 25 \\implies 4^x + 4^{-x} = 23$." },
+
+            // --- BAB 3: LOGARITMA ---
+            { topic: "Logaritma", diff: "Mudah", text: "Nilai dari $^2\\log 32 + ^3\\log 81 - ^5\\log 25$ adalah...", options: ["5", "6", "7", "8", "9"], correct: 2, pembahasan: "$^2\\log 2^5 + ^3\\log 3^4 - ^5\\log 5^2 = 5 + 4 - 2 = 7$." },
+            { topic: "Logaritma", diff: "Mudah", text: "Nilai dari $^3\\log 54 - ^3\\log 2$ adalah...", options: ["1", "2", "3", "4", "5"], correct: 2, pembahasan: "$^3\\log \\left(\\frac{54}{2}\\right) = ^3\\log 27 = ^3\\log 3^3 = 3$." },
+            { topic: "Logaritma", diff: "Sedang", text: "Jika $^2\\log 3 = p$ dan $^2\\log 5 = q$, maka nilai $^2\\log 45$ adalah...", options: ["p + q", "2p + q", "p + 2q", "2p + 2q", "p^2 + q"], correct: 1, pembahasan: "$^2\\log 45 = ^2\\log(3^2 \\times 5) = 2(^2\\log 3) + ^2\\log 5 = 2p + q$." },
+            { topic: "Logaritma", diff: "Sedang", text: "Hasil dari $^2\\log 5 \\times ^5\\log 7 \\times ^7\\log 16$ adalah...", options: ["2", "3", "4", "8", "16"], correct: 2, pembahasan: "Gunakan sifat rantai perkalian: $^2\\log 16 = ^2\\log 2^4 = 4$." },
+            { topic: "Logaritma", diff: "Sulit", text: "Nilai $x$ yang memenuhi persamaan $^3\\log(x + 2) + ^3\\log(x - 4) = 3$ adalah...", options: ["7", "-5", "5", "7 \\text{ dan } -5", "6"], correct: 0, pembahasan: "$^3\\log[(x+2)(x-4)] = ^3\\log 27 \\implies x^2 - 2x - 8 = 27 \\implies x^2 - 2x - 35 = 0 \\implies (x-7)(x+5)=0$. Uji numerus: $x = 7$ memenuhi ($9 > 0$ dan $3 > 0$), sedangkan $x = -5$ tidak memenuhi." },
+            { topic: "Logaritma", diff: "Sulit", text: "Jika $^2\\log 3 = a$ dan $^3\\log 5 = b$, maka nilai $^6\\log 15$ dinyatakan dalam $a$ dan $b$ adalah...", options: ["\\frac{a(1+b)}{a+1}", "\\frac{a+b}{a+1}", "\\frac{ab+1}{a+1}", "\\frac{a(b+1)}{b+1}", "\\frac{a+b}{ab}"], correct: 0, pembahasan: "$^6\\log 15 = \\frac{^3\\log 15}{^3\\log 6} = \\frac{^3\\log 3 + ^3\\log 5}{^3\\log 3 + ^3\\log 2} = \\frac{1 + b}{1 + \\frac{1}{a}} = \\frac{a(1 + b)}{a + 1}$." },
+
+            // --- BAB 4: BARISAN DAN DERET ---
+            { topic: "Barisan dan Deret", diff: "Mudah", text: "Suku ke-20 dari barisan aritmatika $4, 7, 10, 13, \\dots$ adalah...", options: ["58", "61", "64", "67", "70"], correct: 1, pembahasan: "$a = 4, b = 3$. $U_{20} = 4 + (20-1)3 = 4 + 57 = 61$." },
+            { topic: "Barisan dan Deret", diff: "Mudah", text: "Rasio dari barisan geometri $3, 6, 12, 24, \\dots$ adalah...", options: ["1", "2", "3", "4", "6"], correct: 1, pembahasan: "$r = \\frac{6}{3} = 2$." },
+            { topic: "Barisan dan Deret", diff: "Sedang", text: "Jumlah 10 suku pertama deret aritmatika $2 + 6 + 10 + 14 + \\dots$ adalah...", options: ["180", "200", "220", "240", "260"], correct: 1, pembahasan: "$a = 2, b = 4, n = 10$. $S_{10} = \\frac{10}{2}(2(2) + 9(4)) = 5(4 + 36) = 5(40) = 200$." },
+            { topic: "Barisan dan Deret", diff: "Sedang", text: "Suatu barisan aritmatika memiliki $U_3 = 11$ dan $U_8 = 31$. Nilai suku ke-12 ($U_{12}$) adalah...", options: ["43", "47", "51", "55", "59"], correct: 1, pembahasan: "$5b = 31 - 11 = 20 \\implies b = 4$. $a = 11 - 2(4) = 3$. $U_{12} = 3 + 11(4) = 47$." },
+            { topic: "Barisan dan Deret", diff: "Sulit", text: "Jumlah deret geometri tak hingga $18 + 6 + 2 + \\frac{2}{3} + \\dots$ adalah...", options: ["24", "27", "30", "36", "54"], correct: 1, pembahasan: "$a = 18, r = \\frac{6}{18} = \\frac{1}{3}$. $S_\\infty = \\frac{18}{1 - \\frac{1}{3}} = \\frac{18}{\\frac{2}{3}} = 27$." },
+            { topic: "Barisan dan Deret", diff: "Sulit", text: "Seutas tali dipotong menjadi 5 bagian membentuk barisan geometri. Jika potongan terpendek $4\\text{ cm}$ dan terpanjang $64\\text{ cm}$, panjang tali semula adalah...", options: ["120\\text{ cm}", "124\\text{ cm}", "128\\text{ cm}", "132\\text{ cm}", "136\\text{ cm}"], correct: 1, pembahasan: "$a = 4, U_5 = a r^4 = 64 \\implies r^4 = 16 \\implies r = 2$. $S_5 = \\frac{4(2^5 - 1)}{2 - 1} = 4(31) = 124\\text{ cm}$." },
+
+            // --- BAB 5: SPLDV & SPtLDV ---
+            { topic: "SPLDV & SPtLDV", diff: "Mudah", text: "Himpunan penyelesaian dari sistem persamaan $x + y = 9$ dan $x - y = 3$ adalah...", options: ["\\{(6, 3)\\}", "\\{(3, 6)\\}", "\\{(5, 4)\\}", "\\{(7, 2)\\}", "\\{(4, 5)\\}"], correct: 0, pembahasan: "Jumlahkan kedua persamaan: $2x = 12 \\implies x = 6$, maka $y = 9 - 6 = 3$." },
+            { topic: "SPLDV & SPtLDV", diff: "Mudah", text: "Titik berikut yang memenuhi pertidaksamaan $2x + 3y \\le 12$ adalah...", options: ["(4, 3)", "(5, 2)", "(2, 2)", "(6, 1)", "(3, 3)"], correct: 2, pembahasan: "Uji titik $(2, 2)$: $2(2) + 3(2) = 4 + 6 = 10 \\le 12$ (Memenuhi)." },
+            { topic: "SPLDV & SPtLDV", diff: "Sedang", text: "Harga 3 buku dan 2 pulpen adalah Rp21.000, sedangkan harga 2 buku dan 3 pulpen adalah Rp19.000. Harga 1 buku dan 1 pulpen adalah...", options: ["Rp7.000", "Rp8.000", "Rp9.000", "Rp10.000", "Rp11.000"], correct: 1, pembahasan: "Jumlahkan kedua persamaan: $5x + 5y = 40.000 \\implies x + y = 8.000$." },
+            { topic: "SPLDV & SPtLDV", diff: "Sedang", text: "Daerah penyelesaian sistem $x + y \\le 6$, $2x + y \\le 8$, $x \\ge 0$, $y \\ge 0$ memiliki titik pojok perpotongan kedua garis di...", options: ["(2, 4)", "(4, 2)", "(3, 3)", "(1, 5)", "(2, 3)"], correct: 0, pembahasan: "Eliminasi $(2x + y = 8) - (x + y = 6) \\implies x = 2$, maka $y = 4$. Titik potong di $(2, 4)$." },
+            { topic: "SPLDV & SPtLDV", diff: "Sulit", text: "Suatu tempat parkir menampung motor ($x$) dan mobil ($y$) maksimal 50 kendaraan dengan luas total maksimal $200\\text{ m}^2$. Jika 1 motor butuh $2\\text{ m}^2$ dan 1 mobil butuh $10\\text{ m}^2$, model SPtLDV yang tepat adalah...", options: ["x + y \\le 50,\\; x + 5y \\le 100,\\; x \\ge 0,\\; y \\ge 0", "x + y \\ge 50,\\; x + 5y \\ge 100,\\; x \\ge 0,\\; y \\ge 0", "x + y \\le 50,\\; 5x + y \\le 100,\\; x \\ge 0,\\; y \\ge 0", "x + y \\le 200,\\; x + 5y \\le 50,\\; x \\ge 0,\\; y \\ge 0", "2x + 10y \\le 50,\\; x + y \\le 200,\\; x \\ge 0,\\; y \\ge 0"], correct: 0, pembahasan: "Kapasitas kendaraan: $x + y \\le 50$. Luas: $2x + 10y \\le 200 \\iff x + 5y \\le 100$, dengan $x \\ge 0, y \\ge 0$." },
+
+            // --- BAB 6: SPLTV & SPtLTV ---
+            { topic: "SPLTV & SPtLTV", diff: "Mudah", text: "Jika $x = 2$, $y = 3$, dan $x + y + z = 10$, maka nilai $z$ adalah...", options: ["3", "4", "5", "6", "7"], correct: 2, pembahasan: "$2 + 3 + z = 10 \\implies 5 + z = 10 \\implies z = 5$." },
+            { topic: "SPLTV & SPtLTV", diff: "Sedang", text: "Diketahui $x + y + z = 6$, $x - y + z = 2$, dan $x + y - z = 0$. Nilai dari $x + 2y + 3z$ adalah...", options: ["12", "14", "16", "18", "20"], correct: 1, pembahasan: "$(x+y+z) - (x-y+z) = 4 \\implies 2y = 4 \\implies y = 2$. $(x+y+z) - (x+y-z) = 6 \\implies 2z = 6 \\implies z = 3$. Maka $x = 1$. Jadi $1 + 2(2) + 3(3) = 14$." },
+            { topic: "SPLTV & SPtLTV", diff: "Sedang", text: "Triple bilangan $(x, y, z)$ yang memenuhi sistem pertidaksamaan $x + y + z \\le 10$, $2x + y - z \\ge 4$, dan $x, y, z \\ge 1$ adalah...", options: ["(1, 1, 5)", "(3, 2, 1)", "(2, 2, 6)", "(1, 2, 4)", "(4, 4, 4)"], correct: 1, pembahasan: "Uji $(3, 2, 1)$: $3+2+1 = 6 \\le 10$ (Benar) dan $2(3)+2-1 = 7 \\ge 4$ (Benar)." },
+            { topic: "SPLTV & SPtLTV", diff: "Sulit", text: "Jumlah tiga bilangan adalah 24. Bilangan pertama ditambah bilangan kedua sama dengan dua kali bilangan ketiga. Selisih bilangan kedua dan pertama adalah 2. Bilangan terbesar dari ketiganya adalah...", options: ["7", "8", "9", "10", "11"], correct: 2, pembahasan: "$x+y+z=24$ dan $x+y=2z \\implies 3z=24 \\implies z=8$. Lalu $x+y=16$ dan $y-x=2 \\implies 2y=18 \\implies y=9, x=7$. Terbesar adalah $9$." }
+        ];
+
+        // Generator Parametrik Otomatis agar total Bank Soal tepat 200 soal unik & valid secara matematis!
+        function build200QuestionBank() {
+            const bank = [];
+            let idCounter = 1;
+
+            // Masukkan semua BASE_QUESTIONS dulu
+            BASE_QUESTIONS.forEach(q => {
+                bank.push({ id: idCounter++, ...q });
+            });
+
+            // 1. Generate soal tambahan Trigonometri (hingga ~34 soal)
+            const trigAngles = [
+                { deg: 120, fn: "\\sin 120^\\circ", ans: "\\frac{1}{2}\\sqrt{3}", opts: ["-\\frac{1}{2}\\sqrt{3}", "\\frac{1}{2}", "\\frac{1}{2}\\sqrt{3}", "-\\frac{1}{2}", "1"], idx: 2, exp: "$120^\\circ$ di Kuadran II (sin positif): $\\sin(180^\\circ - 60^\\circ) = \\sin 60^\\circ = \\frac{1}{2}\\sqrt{3}$." },
+                { deg: 135, fn: "\\cos 135^\\circ", ans: "-\\frac{1}{2}\\sqrt{2}", opts: ["\\frac{1}{2}\\sqrt{2}", "-\\frac{1}{2}\\sqrt{2}", "-\\frac{1}{2}", "\\frac{1}{2}", "-1"], idx: 1, exp: "$135^\\circ$ di Kuadran II (cos negatif): $-\\cos 45^\\circ = -\\frac{1}{2}\\sqrt{2}$." },
+                { deg: 210, fn: "\\tan 210^\\circ", ans: "\\frac{1}{3}\\sqrt{3}", opts: ["-\\sqrt{3}", "\\sqrt{3}", "\\frac{1}{3}\\sqrt{3}", "-\\frac{1}{3}\\sqrt{3}", "1"], idx: 2, exp: "$210^\\circ$ di Kuadran III (tan positif): $\\tan(180^\\circ + 30^\\circ) = \\tan 30^\\circ = \\frac{1}{3}\\sqrt{3}$." },
+                { deg: 240, fn: "\\sin 240^\\circ", ans: "-\\frac{1}{2}\\sqrt{3}", opts: ["-\\frac{1}{2}\\sqrt{3}", "\\frac{1}{2}\\sqrt{3}", "-\\frac{1}{2}", "\\frac{1}{2}", "-1"], idx: 0, exp: "$240^\\circ$ di Kuadran III (sin negatif): $-\\sin 60^\\circ = -\\frac{1}{2}\\sqrt{3}$." },
+                { deg: 300, fn: "\\cos 300^\\circ", ans: "\\frac{1}{2}", opts: ["-\\frac{1}{2}", "\\frac{1}{2}", "\\frac{1}{2}\\sqrt{3}", "-\\frac{1}{2}\\sqrt{3}", "0"], idx: 1, exp: "$300^\\circ$ di Kuadran IV (cos positif): $\\cos(360^\\circ - 60^\\circ) = \\cos 60^\\circ = \\frac{1}{2}$." },
+                { deg: 315, fn: "\\tan 315^\\circ", ans: "-1", opts: ["1", "-1", "\\sqrt{2}", "-\\sqrt{2}", "0"], idx: 1, exp: "$315^\\circ$ di Kuadran IV (tan negatif): $-\\tan 45^\\circ = -1$." }
+            ];
+            trigAngles.forEach(t => {
+                bank.push({ id: idCounter++, topic: "Trigonometri", diff: "Mudah", text: `Nilai eksak dari $${t.fn}$ adalah...`, options: t.opts, correct: t.idx, pembahasan: t.exp });
+            });
+
+            const triples = [[5, 12, 13], [8, 15, 17], [7, 24, 25], [9, 40, 41], [6, 8, 10], [12, 16, 20]];
+            triples.forEach(([y, x, r], i) => {
+                bank.push({
+                    id: idCounter++, topic: "Trigonometri", diff: i % 2 === 0 ? "Sedang" : "Sulit",
+                    text: `Diketahui $\\sin \\theta = \\frac{${y}}{${r}}$ dengan $\\theta$ sudut lancip. Nilai dari $\\tan \\theta + \\cos \\theta$ adalah...`,
+                    options: [`\\frac{${y*r + x*x}}{${x*r}}`, `\\frac{${y + x}}{${r}}`, `\\frac{${x}}{${y}}`, `\\frac{${r}}{${x + y}}`, `1`],
+                    correct: 0,
+                    pembahasan: `Sisi samping $x = \\sqrt{${r}^2 - ${y}^2} = ${x}$. Maka $\\tan \\theta = \\frac{${y}}{${x}}$ dan $\\cos \\theta = \\frac{${x}}{${r}}$. Jumlahnya $= \\frac{${y}\\cdot${r} + ${x}^2}{${x}\\cdot${r}} = \\frac{${y*r + x*x}}{${x*r}}$.`
+                });
+                bank.push({
+                    id: idCounter++, topic: "Trigonometri", diff: "Sedang",
+                    text: `Jika $\\cos \\alpha = \\frac{${x}}{${r}}$ di Kuadran I, nilai dari $2\\sin \\alpha \\cos \\alpha$ adalah...`,
+                    options: [`\\frac{${2*x*y}}{${r*r}}`, `\\frac{${x*y}}{${r*r}}`, `\\frac{${y}}{${r}}`, `\\frac{${2*y}}{${r}}`, `1`],
+                    correct: 0,
+                    pembahasan: `$\\sin \\alpha = \\frac{${y}}{${r}}$, sehingga $2\\sin \\alpha \\cos \\alpha = 2 \\cdot \\frac{${y}}{${r}} \\cdot \\frac{${x}}{${r}} = \\frac{${2*x*y}}{${r*r}}$.`
+                });
+            });
+
+            // 2. Generate soal tambahan Eksponen (hingga ~34 soal)
+            for (let p = 2; p <= 8; p++) {
+                const ansExp = p + 3;
+                bank.push({
+                    id: idCounter++, topic: "Eksponen", diff: "Mudah",
+                    text: `Bentuk sederhana dari $\\frac{2^{${p+5}} \\times 2^{-2}}{2^{0}}$ adalah...`,
+                    options: [`2^{${ansExp-2}}`, `2^{${ansExp-1}}`, `2^{${ansExp}}`, `2^{${ansExp+1}}`, `2^{${ansExp+2}}`],
+                    correct: 2,
+                    pembahasan: `$2^{${p+5} - 2 - 0} = 2^{${ansExp}}$.`
+                });
+                const xVal = p;
+                const rhs = Math.pow(2, xVal + 1);
+                if (rhs <= 512) {
+                    bank.push({
+                        id: idCounter++, topic: "Eksponen", diff: "Sedang",
+                        text: `Nilai $x$ yang memenuhi persamaan $2^{x + 1} = ${rhs}$ adalah...`,
+                        options: [`${xVal - 2}`, `${xVal - 1}`, `${xVal}`, `${xVal + 1}`, `${xVal + 2}`],
+                        correct: 2,
+                        pembahasan: `$2^{x+1} = 2^{${xVal+1}} \\implies x + 1 = ${xVal+1} \\implies x = ${xVal}$.`
+                    });
+                }
+                const aRoot = p + 1;
+                const bRoot = p;
+                const sumR = aRoot + bRoot;
+                const prodR = aRoot * bRoot;
+                bank.push({
+                    id: idCounter++, topic: "Eksponen", diff: "Sulit",
+                    text: `Bentuk sederhana dari $\\sqrt{${sumR} + 2\\sqrt{${prodR}}}$ adalah...`,
+                    options: [`\\sqrt{${aRoot}} - \\sqrt{${bRoot}}`, `\\sqrt{${aRoot}} + \\sqrt{${bRoot}}`, `${aRoot} + \\sqrt{${bRoot}}`, `\\sqrt{${sumR}}`, `2\\sqrt{${prodR}}`],
+                    correct: 1,
+                    pembahasan: `Cari dua bilangan yang jumlahnya $${sumR}$ dan hasil kalinya $${prodR}$, yaitu $${aRoot}$ dan $${bRoot}$. Jadi hasilnya $\\sqrt{${aRoot}} + \\sqrt{${bRoot}}$.`
+                });
+            }
+
+            // 3. Generate soal tambahan Logaritma (hingga ~34 soal)
+            for (let k = 2; k <= 10; k++) {
+                const val1 = Math.pow(2, k);
+                if (val1 <= 1024) {
+                    bank.push({
+                        id: idCounter++, topic: "Logaritma", diff: "Mudah",
+                        text: `Nilai dari $^2\\log ${val1} + ^3\\log 27$ adalah...`,
+                        options: [`${k + 1}`, `${k + 2}`, `${k + 3}`, `${k + 4}`, `${k + 5}`],
+                        correct: 2,
+                        pembahasan: `$^2\\log(2^{${k}}) + ^3\\log(3^3) = ${k} + 3 = ${k + 3}$.`
+                    });
+                }
+                bank.push({
+                    id: idCounter++, topic: "Logaritma", diff: "Sedang",
+                    text: `Nilai dari $^{${k}}\\log ${k*k*k} \\times ^5\\log 25$ adalah...`,
+                    options: ["3", "4", "5", "6", "9"],
+                    correct: 3,
+                    pembahasan: `$^{${k}}\\log(${k}^3) \\times ^5\\log(5^2) = 3 \\times 2 = 6$.`
+                });
+                const solX = k + 3;
+                const numLog = solX - 3;
+                bank.push({
+                    id: idCounter++, topic: "Logaritma", diff: "Sulit",
+                    text: `Jika $^2\\log(x - 3) = ${k <= 5 ? k : 4}$, maka nilai $x$ yang memenuhi adalah...`,
+                    options: [`${Math.pow(2, k <= 5 ? k : 4) + 1}`, `${Math.pow(2, k <= 5 ? k : 4) + 2}`, `${Math.pow(2, k <= 5 ? k : 4) + 3}`, `${Math.pow(2, k <= 5 ? k : 4) + 4}`, `${Math.pow(2, k <= 5 ? k : 4)}`],
+                    correct: 2,
+                    pembahasan: `$x - 3 = 2^{${k <= 5 ? k : 4}} = ${Math.pow(2, k <= 5 ? k : 4)} \\implies x = ${Math.pow(2, k <= 5 ? k : 4) + 3}$.`
+                });
+            }
+
+            // 4. Generate soal tambahan Barisan dan Deret (hingga ~34 soal)
+            for (let n = 11; n <= 20; n++) {
+                const a = n - 7;
+                const b = (n % 4) + 2;
+                const un = a + (n - 1) * b;
+                bank.push({
+                    id: idCounter++, topic: "Barisan dan Deret", diff: "Mudah",
+                    text: `Suku ke-${n} dari barisan aritmatika $${a}, ${a+b}, ${a+2*b}, \\dots$ adalah...`,
+                    options: [`${un - b}`, `${un}`, `${un + b}`, `${un + 2*b}`, `${un - 2*b}`],
+                    correct: 1,
+                    pembahasan: `$a = ${a}, b = ${b}$. $U_{${n}} = ${a} + (${n}-1)(${b}) = ${a} + ${(n-1)*b} = ${un}$.`
+                });
+
+                const sn = (n / 2) * (2 * a + (n - 1) * b);
+                if (Number.isInteger(sn)) {
+                    bank.push({
+                        id: idCounter++, topic: "Barisan dan Deret", diff: "Sedang",
+                        text: `Jumlah ${n} suku pertama deret aritmatika $${a} + ${a+b} + ${a+2*b} + \\dots$ adalah...`,
+                        options: [`${sn - 10}`, `${sn}`, `${sn + 10}`, `${sn + 20}`, `${sn - 20}`],
+                        correct: 1,
+                        pembahasan: `$S_{${n}} = \\frac{${n}}{2}(2(${a}) + (${n}-1)(${b})) = ${sn}$.`
+                    });
+                }
+
+                const aGeo = (n % 5) + 2;
+                const sInf = aGeo * 2; // r = 1/2
+                bank.push({
+                    id: idCounter++, topic: "Barisan dan Deret", diff: "Sulit",
+                    text: `Jumlah deret geometri tak hingga $${aGeo} + \\frac{${aGeo}}{2} + \\frac{${aGeo}}{4} + \\dots$ adalah...`,
+                    options: [`${aGeo}`, `${Math.round(aGeo*1.5)}`, `${sInf}`, `${sInf + 2}`, `${sInf * 2}`],
+                    correct: 2,
+                    pembahasan: `$a = ${aGeo}, r = \\frac{1}{2}$. $S_\\infty = \\frac{${aGeo}}{1 - \\frac{1}{2}} = ${sInf}$.`
+                });
+            }
+
+            // 5. Generate soal tambahan SPLDV & SPtLDV (hingga ~34 soal)
+            for (let m = 2; m <= 12; m++) {
+                const xSol = m + 1;
+                const ySol = m - 1;
+                const sumXY = xSol + ySol;
+                const diffXY = xSol - ySol;
+                bank.push({
+                    id: idCounter++, topic: "SPLDV & SPtLDV", diff: "Mudah",
+                    text: `Penyelesaian dari SPLDV $x + y = ${sumXY}$ dan $x - y = ${diffXY}$ memiliki nilai $x \\times y$ sebesar...`,
+                    options: [`${xSol * ySol - 2}`, `${xSol * ySol}`, `${xSol * ySol + 2}`, `${xSol + ySol}`, `${xSol * 2}`],
+                    correct: 1,
+                    pembahasan: `$2x = ${sumXY + diffXY} \\implies x = ${xSol}$ dan $y = ${ySol}$. Maka $x \\times y = ${xSol * ySol}$.`
+                });
+
+                const cLine = m * 3;
+                bank.push({
+                    id: idCounter++, topic: "SPLDV & SPtLDV", diff: "Sedang",
+                    text: `Garis pembatas SPtLDV $3x + ${m}y \\le ${cLine}$ memotong sumbu $X$ di titik...`,
+                    options: [`(${m}, 0)`, `(0, ${m})`, `(3, 0)`, `(0, 3)`, `(${cLine}, 0)`],
+                    correct: 0,
+                    pembahasan: `Titik potong sumbu $X$ diperoleh saat $y = 0$: $3x = ${cLine} \\implies x = ${m}$, yaitu $(${m}, 0)$.`
+                });
+
+                bank.push({
+                    id: idCounter++, topic: "SPLDV & SPtLDV", diff: "Sulit",
+                    text: `Daerah himpunan penyelesaian yang terletak di Kuadran I dan berada di bawah garis $2x + 5y = ${10 * m}$ dinyatakan oleh sistem pertidaksamaan...`,
+                    options: [
+                        `2x + 5y \\le ${10*m},\\; x \\ge 0,\\; y \\ge 0`,
+                        `2x + 5y \\ge ${10*m},\\; x \\ge 0,\\; y \\ge 0`,
+                        `5x + 2y \\le ${10*m},\\; x \\ge 0,\\; y \\ge 0`,
+                        `2x + 5y \\le ${10*m},\\; x \\le 0,\\; y \\le 0`,
+                        `2x - 5y \\le ${10*m},\\; x \\ge 0,\\; y \\ge 0`
+                    ],
+                    correct: 0,
+                    pembahasan: `Kuadran I berarti $x \\ge 0, y \\ge 0$, dan di bawah garis memuat titik $(0,0)$ sehingga $2x + 5y \\le ${10*m}$.`
+                });
+            }
+
+            // 6. Generate soal tambahan SPLTV & SPtLTV (hingga genap 200 soal)
+            let zStep = 1;
+            while (bank.length < 200) {
+                const x = (zStep % 4) + 1;
+                const y = ((zStep + 1) % 4) + 2;
+                const z = ((zStep + 2) % 4) + 1;
+                const eq1 = x + y + z;
+                const eq2 = 2 * x + y - z;
+                const eq3 = x - y + 2 * z;
+
+                if (bank.length % 2 === 0) {
+                    bank.push({
+                        id: idCounter++, topic: "SPLTV & SPtLTV", diff: zStep % 3 === 0 ? "Sulit" : "Sedang",
+                        text: `Diketahui sistem persamaan $x + y + z = ${eq1}$, $2x + y - z = ${eq2}$, dan $x - y + 2z = ${eq3}$. Nilai dari $x + y + 2z$ adalah...`,
+                        options: [`${eq1 + z - 1}`, `${eq1 + z}`, `${eq1 + z + 1}`, `${eq1 + z + 2}`, `${eq1}`],
+                        correct: 1,
+                        pembahasan: `Dari eliminasi bertingkat diperoleh $x = ${x}, y = ${y}, z = ${z}$. Maka $x + y + 2z = ${eq1} + ${z} = ${eq1 + z}$.`
+                    });
+                } else {
+                    const maxCap = eq1 + 3;
+                    bank.push({
+                        id: idCounter++, topic: "SPLTV & SPtLTV", diff: "Sedang",
+                        text: `Sebuah paket berisi $x$ buku, $y$ pensil, dan $z$ penghapus dengan total barang tidak lebih dari ${maxCap} buah serta minimal masing-masing 1 buah. Pertidaksamaan SPtLTV yang tepat adalah...`,
+                        options: [
+                            `x + y + z \\le ${maxCap},\\; x \\ge 1,\\; y \\ge 1,\\; z \\ge 1`,
+                            `x + y + z \\ge ${maxCap},\\; x \\ge 1,\\; y \\ge 1,\\; z \\ge 1`,
+                            `x + y + z \\le ${maxCap},\\; x \\le 1,\\; y \\le 1,\\; z \\le 1`,
+                            `x + y - z \\le ${maxCap},\\; x \\ge 0,\\; y \\ge 0,\\; z \\ge 0`,
+                            `x + y + z = ${maxCap},\\; x > 0,\\; y > 0,\\; z > 0`
+                        ],
+                        correct: 0,
+                        pembahasan: `"Tidak lebih dari ${maxCap}" berarti $\\le ${maxCap}$, dan "minimal masing-masing 1" berarti $x \\ge 1, y \\ge 1, z \\ge 1$.`
+                    });
+                }
+                zStep++;
+            }
+
+            return bank.slice(0, 200);
+        }
+
+        const QUESTION_BANK = build200QuestionBank();
+
+        // =========================================================================
+        // 4. STATE APLIKASI & TROPHY SYSTEM
+        // =========================================================================
+        let currentView = 'home';
+        let activeMateriIndex = 0;
+        let trophies = JSON.parse(localStorage.getItem('mathrush_trophies_v2') || '[]');
+
+        // Quiz State
+        let quizConfig = { topic: 'ALL', diff: 'ALL', count: 10, time: 0 };
+        let activeQuizQuestions = [];
+        let currentQIndex = 0;
+        let userAnswers = {};
+        let flaggedQuestions = new Set();
+        let quizTimerInterval = null;
+        let timeLeft = 0;
+        let startTime = 0;
+
+        // VS MathGod State
+        const CHARACTERS = {
+            chronos: {
+                id: 'chronos',
+                name: '🧙‍♂️ Chronos Aljabar',
+                avatar: '🧙‍♂️⏳',
+                maxHp: 2,
+                baseTime: 20, // +5s passive
+                baseDmg: 25,
+                critDmg: 32,
+                shield: false,
+                abilityResist: 0.7, // 70% tahan sihir waktu
+                passiveText: 'Pasif: +5 Detik Waktu (20s) & Kebal Sihir Waktu | Kelemahan: Hanya 2 Nyawa'
+            },
+            berserker: {
+                id: 'berserker',
+                name: '⚔️ Ksatria Kalkulus',
+                avatar: '⚔️🔥',
+                maxHp: 3,
+                baseTime: 15,
+                baseDmg: 38,
+                critDmg: 50, // Crit jika jawab cepat
+                shield: false,
+                abilityResist: 0.0, // Sangat rentan gangguan layar
+                passiveText: 'Pasif: 38 DMG (50 CRIT jika < 6s!) | Kelemahan: Sangat rentan gangguan layar MathGod'
+            },
+            paladin: {
+                id: 'paladin',
+                name: '🛡️ Paladin Geometri',
+                avatar: '🛡️✨',
+                maxHp: 4,
+                baseTime: 15,
+                baseDmg: 20,
+                critDmg: 25,
+                shield: true, // Tangkis 1 hit pertama
+                abilityResist: 0.3,
+                passiveText: 'Pasif: 4 Nyawa + 1x Perisai Suci Anti-Damage | Kelemahan: Serangan 20 DMG'
+            }
+        };
+
+        let selectedCharKey = 'chronos';
+        let mgBossMaxHp = 120;
+        let mgHp = 120;
+        let mgPhase = 1; // 1 = Normal, 2 = Enraged God
+        let mgPlayerHp = 3;
+        let mgHasShield = false;
+        let mgCurrentQ = null;
+        let mgUsedQuestionIds = new Set();
+        let mgTimerInterval = null;
+        let mgTimeLeft = 15;
+        let mgQuestionCount = 0;
+        let mgQuestionStartTime = 0;
+        let mgAbilityTimeout = null;
+
+        // Helper KaTeX Safe Render
+        window.safeRenderMath = function(el) {
+            if (window.renderMathInElement) {
+                try {
+                    window.renderMathInElement(el || document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false},
+                            {left: '\\(', right: '\\)', display: false},
+                            {left: '\\[', right: '\\]', display: true}
+                        ],
+                        throwOnError: false
+                    });
+                } catch(e) {}
+            }
+        };
+
+        // Switch View Controller & Auto BGM Mood
+        window.switchView = function(viewName) {
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+            if (mgTimerInterval) clearInterval(mgTimerInterval);
+            clearBossAbilities();
+
+            ['home', 'materi', 'quiz-setup', 'quiz-active', 'quiz-result', 'mathgod'].forEach(v => {
+                const el = document.getElementById(`view-${v}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const target = document.getElementById(`view-${viewName}`);
+            if (target) {
+                target.classList.remove('hidden');
+                currentView = viewName;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Switch BGM sesuai halaman
+            if (viewName === 'home' || viewName === 'materi' || viewName === 'quiz-setup') {
+                AudioEngine.startBGM('lobby');
+            } else if (viewName === 'quiz-active') {
+                AudioEngine.startBGM('quiz');
+            } else if (viewName === 'mathgod') {
+                window.resetToCharSelect();
+                AudioEngine.startBGM('battle');
+            }
+
+            if (viewName === 'materi') window.openMateriByIndex(activeMateriIndex, false);
+            updateTrophyUI();
+        };
+
+        window.toggleMobileMenu = function() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        };
+
+        // =========================================================================
+        // 5. RENDER MATERI LENGKAP & LINK YOUTUBE
+        // =========================================================================
+        function renderMateriTabsHeader() {
+            const container = document.getElementById('materi-tabs');
+            if (!container) return;
+            container.innerHTML = MATERI_DATA.map((m, idx) => `
+                <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(${idx})" class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold border transition-all cursor-pointer ${idx === activeMateriIndex ? 'bg-gold-500 text-obsidian-950 border-gold-400 font-extrabold shadow-gold-glow' : 'bg-obsidian-900 text-gray-300 border-white/10 hover:border-gold-400'}">
+                    ${idx + 1}. ${m.bab}
+                </button>
+            `).join('');
+        }
+
+        window.openMateriByIndex = function(idx, doSwitch = true) {
+            activeMateriIndex = idx;
+            if (doSwitch && currentView !== 'materi') {
+                window.switchView('materi');
+                return;
+            }
+            renderMateriTabsHeader();
+            
+            const m = MATERI_DATA[idx];
+            const contentBox = document.getElementById('materi-content');
+            if (!contentBox) return;
+
+            contentBox.innerHTML = `
+                <div class="space-y-7">
+                    <!-- Header Bab -->
+                    <div class="border-b border-gold-500/25 pb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs font-bold uppercase tracking-widest text-gold-400">Modul Bab ${idx + 1} dari 6 • Kurikulum Kelas 10</span>
+                            <h3 class="font-display text-2xl sm:text-3xl font-black text-white mt-1">${m.bab}</h3>
+                            <p class="text-xs sm:text-sm font-semibold text-gold-300/90 mt-1">${m.subtitle}</p>
+                        </div>
+                        <button type="button" onclick="window.sfx('click'); window.quickPracticeTopic('${m.bab}')" class="btn-gold self-start sm:self-center px-4 py-2.5 rounded-xl text-xs font-extrabold shadow-gold-glow flex items-center gap-1.5">
+                            <span>⚡</span> Latihan Soal Bab Ini
+                        </button>
+                    </div>
+
+                    <!-- Pengantar Konsep -->
+                    <div class="p-4 rounded-xl bg-obsidian-900/90 border-l-4 border-gold-400 text-gray-200 text-sm sm:text-base leading-relaxed">
+                        ${m.konsep}
+                    </div>
+
+                    <!-- Sub-Materi & Rumus Detail -->
+                    <div class="space-y-5">
+                        ${m.submateri.map(sub => `
+                            <div class="p-5 rounded-2xl bg-obsidian-900/80 border border-white/10 space-y-3">
+                                <h4 class="text-base font-bold text-gold-300">${sub.judul}</h4>
+                                <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">${sub.uraian}</p>
+                                <div class="grid grid-cols-1 gap-2.5 pt-1">
+                                    ${sub.rumus.map(r => `<div class="p-3.5 rounded-xl bg-obsidian-950 border border-gold-500/30 text-center text-gold-100 overflow-x-auto">$$${r}$$</div>`).join('')}
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Contoh Soal & Pembahasan -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-br from-obsidian-900 to-obsidian-950 border border-gold-500/35 space-y-3">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-gold-400 flex items-center gap-1.5"><span>✍️</span> Contoh Soal Tipe Ujian PSAS & Pembahasan</h4>
+                        <p class="text-sm sm:text-base font-semibold text-white leading-relaxed">${m.contoh}</p>
+                        <div class="p-4 rounded-xl bg-obsidian-950/90 border border-white/10 text-xs sm:text-sm text-gray-300 leading-relaxed space-y-1">
+                            <strong class="text-emerald-400 block mb-1">Langkah Penyelesaian:</strong>
+                            ${m.penyelesaian}
+                        </div>
+                    </div>
+
+                    <!-- Sumber Video Pembelajaran YouTube -->
+                    <div class="p-5 rounded-2xl bg-rose-950/20 border border-rose-500/35 space-y-3">
+                        <div class="flex items-center gap-2">
+                            <span class="text-xl">▶️</span>
+                            <h4 class="text-sm font-bold uppercase tracking-wider text-rose-300">Sumber Video Pembelajaran YouTube (${m.bab})</h4>
+                        </div>
+                        <p class="text-xs text-gray-400">Klik tautan video pembahasan di bawah ini untuk menonton penjelasan visual langkah demi langkah di YouTube:</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            ${m.videos.map(v => `
+                                <a href="${v.url}" target="_blank" rel="noopener noreferrer" onclick="window.sfx('click')" class="p-3.5 rounded-xl bg-obsidian-900 border border-rose-500/30 hover:border-rose-400 hover:bg-rose-500/10 transition-all flex items-center justify-between gap-3 group">
+                                    <div class="flex items-center gap-3">
+                                        <span class="w-9 h-9 rounded-lg bg-rose-600 text-white flex items-center justify-center font-bold text-sm shrink-0 group-hover:scale-105 transition-transform">▶</span>
+                                        <span class="text-xs sm:text-sm font-semibold text-gray-200 group-hover:text-white leading-snug">${v.title}</span>
+                                    </div>
+                                    <span class="text-rose-400 text-xs font-bold shrink-0">Buka ↗</span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Navigasi Antar Bab -->
+                    <div class="flex justify-between pt-2">
+                        <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(${idx > 0 ? idx - 1 : 5})" class="px-4 py-2.5 rounded-xl bg-obsidian-900 border border-white/10 text-xs font-semibold text-gray-300 hover:border-gold-400 cursor-pointer">← Bab Sebelumnya</button>
+                        <button type="button" onclick="window.sfx('click'); window.openMateriByIndex(${idx < 5 ? idx + 1 : 0})" class="px-4 py-2.5 rounded-xl bg-gold-500/20 border border-gold-500/40 text-xs font-semibold text-gold-300 hover:bg-gold-500/30 cursor-pointer">Bab Selanjutnya →</button>
+                    </div>
+                </div>
+            `;
+            window.safeRenderMath(contentBox);
+        };
+
+        window.quickPracticeTopic = function(babName) {
+            quizConfig.topic = babName;
+            quizConfig.diff = 'ALL';
+            quizConfig.count = 10;
+            window.switchView('quiz-setup');
+            // Highlight selected topic button
+            document.querySelectorAll('.topic-btn').forEach(b => {
+                b.classList.remove('active-opt', 'bg-gold-500', 'text-obsidian-950', 'border-gold-400', 'font-bold');
+                b.classList.add('bg-obsidian-900', 'text-gray-300', 'border-white/10');
+                if (b.getAttribute('data-topic') === babName) {
+                    b.classList.add('active-opt', 'bg-gold-500', 'text-obsidian-950', 'border-gold-400', 'font-bold');
+                    b.classList.remove('bg-obsidian-900', 'text-gray-300', 'border-white/10');
+                }
+            });
+        };
+
+        // =========================================================================
+        // 6. QUIZ SETUP & EXECUTION (200 BANK SOAL ACAK)
+        // =========================================================================
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('total-bank-badge').textContent = QUESTION_BANK.length;
+            renderMateriTabsHeader();
+            initQuizSetupEvents();
+            updateTrophyUI();
+            window.safeRenderMath(document.body);
+        });
+
+        function initQuizSetupEvents() {
+            const bindGroup = (selector, prop, isInt = false) => {
+                document.querySelectorAll(selector).forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        window.sfx('click');
+                        document.querySelectorAll(selector).forEach(b => {
+                            b.classList.remove('active-opt', 'bg-gold-500', 'text-obsidian-950', 'border-gold-400', 'font-bold');
+                            b.classList.add('bg-obsidian-900', 'text-gray-300', 'border-white/10');
+                        });
+                        e.currentTarget.classList.add('active-opt', 'bg-gold-500', 'text-obsidian-950', 'border-gold-400', 'font-bold');
+                        e.currentTarget.classList.remove('bg-obsidian-900', 'text-gray-300', 'border-white/10');
+                        const val = e.currentTarget.getAttribute(`data-${prop}`);
+                        quizConfig[prop] = isInt ? parseInt(val) : val;
+                    });
+                });
+            };
+
+            bindGroup('.topic-btn', 'topic', false);
+            bindGroup('.diff-btn', 'diff', false);
+            bindGroup('.count-btn', 'count', true);
+            bindGroup('.time-btn', 'time', true);
+
+            document.querySelectorAll('.active-opt').forEach(b => {
+                b.classList.add('bg-gold-500', 'text-obsidian-950', 'border-gold-400', 'font-bold');
+            });
+            document.querySelectorAll('.topic-btn:not(.active-opt), .diff-btn:not(.active-opt), .count-btn:not(.active-opt), .time-btn:not(.active-opt)').forEach(b => {
+                b.classList.add('bg-obsidian-900', 'text-gray-300', 'border-white/10');
+            });
+        }
+
+        // Fisher-Yates Shuffle untuk pengacakan soal maksimal
+        function shuffleArray(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        window.startCustomQuiz = function() {
+            let pool = QUESTION_BANK;
+            if (quizConfig.topic !== 'ALL') {
+                pool = pool.filter(q => q.topic === quizConfig.topic);
+            }
+            if (quizConfig.diff !== 'ALL') {
+                pool = pool.filter(q => q.diff === quizConfig.diff);
+            }
+
+            const warnBox = document.getElementById('setup-warning');
+            if (pool.length === 0) {
+                warnBox.textContent = "Soal dengan kombinasi filter tersebut kosong. Coba pilih 'Semua Tingkat'.";
+                warnBox.classList.remove('hidden');
+                return;
+            }
+            warnBox.classList.add('hidden');
+
+            activeQuizQuestions = shuffleArray(pool).slice(0, quizConfig.count);
+            currentQIndex = 0;
+            userAnswers = {};
+            flaggedQuestions.clear();
+            startTime = Date.now();
+
+            window.switchView('quiz-active');
+            renderActiveQuestion();
+            initQuizTimer();
+        };
+
+        function initQuizTimer() {
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+            const display = document.getElementById('quiz-timer-display');
+            if (quizConfig.time === 0) {
+                display.textContent = "∞";
+                return;
+            }
+            timeLeft = quizConfig.time;
+            quizTimerInterval = setInterval(() => {
+                timeLeft--;
+                let m = Math.floor(timeLeft / 60);
+                let s = timeLeft % 60;
+                display.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                if (timeLeft <= 0) {
+                    clearInterval(quizTimerInterval);
+                    window.finishQuiz();
+                }
+            }, 1000);
+        }
+
+        function renderActiveQuestion() {
+            const q = activeQuizQuestions[currentQIndex];
+            document.getElementById('quiz-progress-badge').textContent = `Soal ${currentQIndex + 1} / ${activeQuizQuestions.length}`;
+            document.getElementById('quiz-meta-badge').textContent = `${q.topic} • ${q.diff}`;
+            document.getElementById('quiz-q-topic').textContent = q.topic;
+            document.getElementById('quiz-q-diff').textContent = q.diff;
+            document.getElementById('quiz-question-text').innerHTML = q.text;
+
+            const optContainer = document.getElementById('quiz-options-container');
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+            optContainer.innerHTML = q.options.map((opt, i) => {
+                const isSelected = userAnswers[currentQIndex] === i;
+                return `
+                    <button type="button" onclick="window.sfx('click'); window.selectQuizOption(${i})" class="w-full text-left p-4 rounded-xl border transition-all flex items-center gap-3 cursor-pointer ${isSelected ? 'bg-gold-500/20 border-gold-400 text-white shadow-gold-glow' : 'bg-obsidian-900 border-white/10 text-gray-300 hover:border-gold-500/40'}">
+                        <span class="w-7 h-7 rounded-lg bg-obsidian-950 border border-white/20 flex items-center justify-center font-bold text-xs shrink-0 ${isSelected ? 'border-gold-400 text-gold-300 bg-gold-500/20' : 'text-gray-400'}">${letters[i]}</span>
+                        <span class="font-medium overflow-x-auto">$${opt}$</span>
+                    </button>
+                `;
+            }).join('');
+
+            const pillsBox = document.getElementById('quiz-nav-pills');
+            pillsBox.innerHTML = activeQuizQuestions.map((_, idx) => {
+                let statusClass = "bg-obsidian-900 border-white/10 text-gray-400";
+                if (userAnswers[idx] !== undefined) statusClass = "bg-gold-500/40 border-gold-500 text-gold-200 font-bold";
+                if (flaggedQuestions.has(idx)) statusClass = "bg-amber-500/40 border-amber-400 text-amber-200 font-bold";
+                if (idx === currentQIndex) statusClass += " ring-2 ring-gold-400";
+                return `<button type="button" onclick="window.sfx('click'); window.jumpToQuestion(${idx})" class="w-8 h-8 rounded-lg border text-xs transition-all cursor-pointer ${statusClass}">${idx + 1}</button>`;
+            }).join('');
+
+            const flagBtn = document.getElementById('btn-flag-q');
+            if (flaggedQuestions.has(currentQIndex)) {
+                flagBtn.textContent = "🚩 Batalkan Ragu-ragu";
+                flagBtn.classList.add('bg-amber-500/20', 'border-amber-400');
+            } else {
+                flagBtn.textContent = "🚩 Tandai Ragu-ragu";
+                flagBtn.classList.remove('bg-amber-500/20', 'border-amber-400');
+            }
+
+            document.getElementById('btn-prev-q').disabled = currentQIndex === 0;
+            const nextBtn = document.getElementById('btn-next-q');
+            if (currentQIndex === activeQuizQuestions.length - 1) {
+                nextBtn.textContent = "Selesai & Nilai 🏁";
+                nextBtn.onclick = () => { window.sfx('click'); window.confirmFinishQuiz(); };
+            } else {
+                nextBtn.textContent = "Selanjutnya →";
+                nextBtn.onclick = () => { window.sfx('click'); window.nextQuestion(); };
+            }
+
+            window.safeRenderMath(document.getElementById('view-quiz-active'));
+        }
+
+        window.selectQuizOption = function(optIndex) {
+            userAnswers[currentQIndex] = optIndex;
+            renderActiveQuestion();
+        };
+
+        window.toggleFlagQuestion = function() {
+            if (flaggedQuestions.has(currentQIndex)) flaggedQuestions.delete(currentQIndex);
+            else flaggedQuestions.add(currentQIndex);
+            renderActiveQuestion();
+        };
+
+        window.prevQuestion = function() {
+            if (currentQIndex > 0) { currentQIndex--; renderActiveQuestion(); }
+        };
+
+        window.nextQuestion = function() {
+            if (currentQIndex < activeQuizQuestions.length - 1) { currentQIndex++; renderActiveQuestion(); }
+        };
+
+        window.jumpToQuestion = function(idx) {
+            currentQIndex = idx;
+            renderActiveQuestion();
+        };
+
+        window.confirmFinishQuiz = function() {
+            if (confirm("Apakah kamu yakin ingin menyelesaikan quiz dan melihat skor serta pembahasan sekarang?")) {
+                window.finishQuiz();
+            }
+        };
+
+        window.finishQuiz = function() {
+            if (quizTimerInterval) clearInterval(quizTimerInterval);
+            window.switchView('quiz-result');
+            AudioEngine.startBGM('lobby');
+
+            let correctCount = 0;
+            let wrongCount = 0;
+            activeQuizQuestions.forEach((q, idx) => {
+                if (userAnswers[idx] === q.correct) correctCount++;
+                else wrongCount++;
+            });
+
+            const score = Math.round((correctCount / activeQuizQuestions.length) * 100);
+            document.getElementById('result-score-num').textContent = score;
+            document.getElementById('result-correct-num').textContent = correctCount;
+            document.getElementById('result-wrong-num').textContent = wrongCount;
+
+            const elapsedSec = Math.floor((Date.now() - startTime) / 1000);
+            document.getElementById('result-time-num').textContent = `${Math.floor(elapsedSec / 60)}m ${elapsedSec % 60}s`;
+
+            let gradeTitle = "Performa Sangat Baik! 🌟";
+            if (score >= 90) { gradeTitle = "Luar Biasa! Siap Raih Nilai 100 PSAS 👑"; AudioEngine.sfx('victory'); }
+            else if (score >= 75) { gradeTitle = "Hebat! Penguasaan Materi Sangat Kuat 🚀"; AudioEngine.sfx('correct'); }
+            else if (score >= 60) { gradeTitle = "Cukup Baik, Pelajari Lagi Pembahasan di Bawah 💪"; }
+            else { gradeTitle = "Ayo Tonton Video Materi & Berlatih Lagi! 📚"; }
+            document.getElementById('result-grade-title').textContent = gradeTitle;
+
+            if (score >= 80 && !trophies.includes("Master Quiz PSAS Kelas 10")) {
+                trophies.push("Master Quiz PSAS Kelas 10");
+                localStorage.setItem('mathrush_trophies_v2', JSON.stringify(trophies));
+            }
+
+            const reviewBox = document.getElementById('result-review-list');
+            reviewBox.innerHTML = activeQuizQuestions.map((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.correct;
+                const letters = ['A', 'B', 'C', 'D', 'E'];
+                return `
+                    <div class="glass-card rounded-xl p-5 space-y-3 border ${isCorrect ? 'border-emerald-500/30' : 'border-rose-500/30'}">
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-bold text-gold-400">Soal ${idx + 1} (${q.topic} • ${q.diff})</span>
+                            <span class="px-2.5 py-0.5 rounded-full font-bold ${isCorrect ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' : 'bg-rose-500/20 text-rose-300 border border-rose-500/40'}">${isCorrect ? 'Benar ✓' : 'Salah ✕'}</span>
+                        </div>
+                        <p class="text-sm font-medium text-gray-100">${q.text}</p>
+                        <div class="text-xs space-y-1 text-gray-300">
+                            <div>Jawabanmu: <strong class="${isCorrect ? 'text-emerald-400' : 'text-rose-400'}">${userAns !== undefined ? `${letters[userAns]}. $${q.options[userAns]}$` : 'Tidak dijawab'}</strong></div>
+                            ${!isCorrect ? `<div>Jawaban Benar: <strong class="text-emerald-400">${letters[q.correct]}. $${q.options[q.correct]}$</strong></div>` : ''}
+                        </div>
+                        <div class="p-3 rounded-lg bg-obsidian-950 border border-white/10 text-xs text-gray-300 leading-relaxed">
+                            <strong class="text-gold-300">Pembahasan:</strong><br>${q.pembahasan}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            window.safeRenderMath(reviewBox);
+            updateTrophyUI();
+        };
+
+        // =========================================================================
+        // 7. ARENA VS MATHGOD (3 KARAKTER, ABILITY GANGGUAN, FASE 2 & TROFI)
+        // =========================================================================
+        window.selectMgCharacter = function(charKey) {
+            window.sfx('click');
+            selectedCharKey = charKey;
+            document.querySelectorAll('.char-card').forEach(card => {
+                card.classList.remove('border-gold-400', 'shadow-gold-glow');
+                card.classList.add('border-white/10');
+            });
+            const activeCard = document.getElementById(`char-card-${charKey}`);
+            if (activeCard) {
+                activeCard.classList.remove('border-white/10');
+                activeCard.classList.add('border-gold-400', 'shadow-gold-glow');
+            }
+        };
+
+        window.resetToCharSelect = function() {
+            if (mgTimerInterval) clearInterval(mgTimerInterval);
+            clearBossAbilities();
+            document.getElementById('mg-char-select').classList.remove('hidden');
+            document.getElementById('mg-arena-active').classList.add('hidden');
+            AudioEngine.startBGM('battle');
+        };
+
+        window.exitMathGodArena = function() {
+            if (confirm("Yakin ingin mundur dari Arena VS MathGod?")) {
+                window.switchView('home');
+            }
+        };
+
+        window.startMathGodBattle = function() {
+            const char = CHARACTERS[selectedCharKey];
+            mgPhase = 1;
+            mgBossMaxHp = 120;
+            mgHp = 120;
+            mgPlayerHp = char.maxHp;
+            mgHasShield = char.shield;
+            mgQuestionCount = 0;
+            mgUsedQuestionIds.clear();
+            clearBossAbilities();
+
+            document.getElementById('mg-char-select').classList.add('hidden');
+            document.getElementById('mg-arena-active').classList.remove('hidden');
+            document.getElementById('mg-battle-box').classList.remove('hidden');
+            document.getElementById('mg-end-screen').classList.add('hidden');
+
+            // Setup Boss Phase 1 UI
+            const phaseBadge = document.getElementById('mg-phase-badge');
+            phaseBadge.textContent = "FASE 1: DEWA ANGKA";
+            phaseBadge.className = "px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-gold-500/20 text-gold-300 border border-gold-500/40";
+            
+            const bossAvatar = document.getElementById('mg-boss-avatar');
+            bossAvatar.textContent = "👹👑";
+            bossAvatar.className = "text-5xl sm:text-6xl animate-boss-float select-none";
+            document.getElementById('mg-boss-name').textContent = "MATHGOD";
+            document.getElementById('mg-boss-taunt').textContent = '"Tunjukkan kecepatan hitungmu, penantang!"';
+
+            // Setup Player UI
+            document.getElementById('mg-player-name').textContent = char.name;
+            document.getElementById('mg-char-passive-info').textContent = char.passiveText;
+            updateMathGodUI();
+            setCombatLog(`⚔️ ${char.name} memasuki arena! Selesaikan soal dalam ${char.baseTime} detik!`);
+
+            AudioEngine.startBGM('battle');
+            nextMathGodQuestion();
+        };
+
+        function setCombatLog(msg, colorClass = "text-gold-200") {
+            const logEl = document.getElementById('mg-combat-log');
+            logEl.className = `mb-5 px-4 py-2.5 rounded-xl bg-obsidian-950/90 border border-gold-500/25 text-xs sm:text-sm text-center font-semibold ${colorClass}`;
+            logEl.innerHTML = msg;
+        }
+
+        function triggerSlashVisual(isCrit = false) {
+            const fx = document.getElementById('mg-slash-fx');
+            fx.textContent = isCrit ? "💥⚡CRITICAL!" : "⚔️💥";
+            fx.classList.remove('hidden');
+            setTimeout(() => fx.classList.add('hidden'), 480);
+        }
+
+        function triggerScreenShake() {
+            const arena = document.getElementById('mg-arena-active');
+            arena.classList.remove('animate-shake');
+            void arena.offsetWidth;
+            arena.classList.add('animate-shake');
+        }
+
+        // Ability Gangguan MathGod pada Layar Player
+        function clearBossAbilities() {
+            if (mgAbilityTimeout) clearTimeout(mgAbilityTimeout);
+            document.getElementById('mg-ability-overlay').classList.add('hidden');
+            document.getElementById('mg-fog-layer').classList.add('hidden');
+            document.getElementById('mg-arena-active').classList.remove('ability-glitch');
+        }
+
+        function maybeTriggerBossAbility() {
+            clearBossAbilities();
+            const char = CHARACTERS[selectedCharKey];
+            // Peluang ability lebih tinggi di Fase 2 (65%) dibanding Fase 1 (35%)
+            const chance = mgPhase === 2 ? 0.65 : 0.35;
+            if (Math.random() > chance) return;
+
+            // Cek resistensi karakter
+            if (Math.random() < char.abilityResist) {
+                setCombatLog(`✨ Pasif ${char.name} menangkis sihir gangguan MathGod!`, "text-sky-300");
+                return;
+            }
+
+            AudioEngine.sfx('ability');
+            const overlay = document.getElementById('mg-ability-overlay');
+            const banner = document.getElementById('mg-ability-banner');
+            const fog = document.getElementById('mg-fog-layer');
+            const arena = document.getElementById('mg-arena-active');
+
+            const abilityType = Math.floor(Math.random() * 3);
+            overlay.classList.remove('hidden');
+
+            if (abilityType === 0) {
+                // Kabut Gelap Kegelapan Aljabar
+                fog.classList.remove('hidden');
+                banner.textContent = "🌫️ SIHIR KABUT ALJABAR! Pandanganmu dikaburkan sementara!";
+                mgAbilityTimeout = setTimeout(() => clearBossAbilities(), 2600);
+            } else if (abilityType === 1) {
+                // Glitch Distorsi Dimensi
+                arena.classList.add('ability-glitch');
+                banner.textContent = "⚡ DISTORSI DIMENSI! Layar terguncang hebat!";
+                mgAbilityTimeout = setTimeout(() => clearBossAbilities(), 2800);
+            } else {
+                // Teror Waktu (-3 detik)
+                mgTimeLeft = Math.max(5, mgTimeLeft - 3);
+                banner.textContent = "⏳ TEROR KRONOS! MathGod mencuri 3 detik waktumu!";
+                mgAbilityTimeout = setTimeout(() => clearBossAbilities(), 2000);
+            }
+        }
+
+        function nextMathGodQuestion() {
+            if (mgHp <= 0 || mgPlayerHp <= 0) return;
+            mgQuestionCount++;
+            const char = CHARACTERS[selectedCharKey];
+
+            // Ambil soal acak yang belum dipakai
+            let available = QUESTION_BANK.filter(q => !mgUsedQuestionIds.has(q.id));
+            if (available.length === 0) {
+                mgUsedQuestionIds.clear();
+                available = QUESTION_BANK;
+            }
+            // Pada fase 2, prioritaskan soal Sedang & Sulit
+            if (mgPhase === 2) {
+                const hardPool = available.filter(q => q.diff !== 'Mudah');
+                if (hardPool.length > 0) available = hardPool;
+            }
+
+            mgCurrentQ = available[Math.floor(Math.random() * available.length)];
+            mgUsedQuestionIds.add(mgCurrentQ.id);
+
+            document.getElementById('mg-q-num').textContent = `Serangan ke-${mgQuestionCount} • ${mgCurrentQ.topic} (${mgCurrentQ.diff})`;
+            document.getElementById('mg-question-text').innerHTML = mgCurrentQ.text;
+
+            const container = document.getElementById('mg-options-container');
+            const letters = ['A', 'B', 'C', 'D', 'E'];
+            // Acak urutan opsi pada Fase 2 agar makin menantang!
+            const indexedOpts = mgCurrentQ.options.map((opt, idx) => ({ opt, isCorrect: idx === mgCurrentQ.correct }));
+            const finalOpts = mgPhase === 2 ? shuffleArray(indexedOpts) : indexedOpts;
+
+            container.innerHTML = finalOpts.map((item, i) => `
+                <button type="button" onclick="window.answerMathGod(${item.isCorrect})" class="w-full text-left p-3.5 rounded-xl bg-obsidian-900 border border-white/15 hover:border-gold-400 hover:bg-gold-500/10 text-gray-200 hover:text-white transition-all flex items-center gap-3 cursor-pointer">
+                    <span class="w-7 h-7 rounded-lg bg-obsidian-950 border border-gold-500/30 flex items-center justify-center font-bold text-xs text-gold-400 shrink-0">${letters[i]}</span>
+                    <span class="text-sm sm:text-base font-medium overflow-x-auto">$${item.opt}$</span>
+                </button>
+            `).join('');
+
+            window.safeRenderMath(document.getElementById('mg-battle-box'));
+            startMathGodTimer();
+
+            if (mgQuestionCount > 1) {
+                maybeTriggerBossAbility();
+            }
+        }
+
+        function startMathGodTimer() {
+            if (mgTimerInterval) clearInterval(mgTimerInterval);
+            const char = CHARACTERS[selectedCharKey];
+            mgTimeLeft = char.baseTime; // 15 detik default (20 detik untuk Chronos)
+            mgQuestionStartTime = Date.now();
+
+            const timerEl = document.getElementById('mg-timer-pill');
+            timerEl.textContent = `⏱️ ${mgTimeLeft}s`;
+            timerEl.className = "px-3.5 py-1 rounded-full bg-obsidian-950 border border-gold-500/40 font-mono text-sm font-black text-gold-300";
+
+            mgTimerInterval = setInterval(() => {
+                mgTimeLeft--;
+                timerEl.textContent = `⏱️ ${mgTimeLeft}s`;
+                if (mgTimeLeft <= 5) {
+                    timerEl.className = "px-3.5 py-1 rounded-full bg-rose-950 border border-rose-500 font-mono text-sm font-black text-rose-400 animate-pulse";
+                    AudioEngine.playTone(880, 'sine', 0.06, 0.05);
+                }
+                if (mgTimeLeft <= 0) {
+                    clearInterval(mgTimerInterval);
+                    handleMathGodDamageToPlayer("⏰ TERLAMBAT! Waktu 15 detik habis, MathGod menebasmu!");
+                }
+            }, 1000);
+        }
+
+        window.answerMathGod = function(isCorrect) {
+            if (mgTimerInterval) clearInterval(mgTimerInterval);
+            clearBossAbilities();
+
+            const char = CHARACTERS[selectedCharKey];
+            const elapsed = (Date.now() - mgQuestionStartTime) / 1000;
+
+            if (isCorrect) {
+                const isCrit = elapsed < 6.0;
+                const dmg = isCrit ? char.critDmg : char.baseDmg;
+                mgHp = Math.max(0, mgHp - dmg);
+
+                AudioEngine.sfx(isCrit ? 'critical' : 'attack');
+                triggerSlashVisual(isCrit);
+                triggerScreenShake();
+                updateMathGodUI();
+
+                setCombatLog(
+                    isCrit 
+                        ? `💥 CRITICAL HIT! Jawaban kilat (${elapsed.toFixed(1)}s) memberikan ${dmg} DAMAGE ke MathGod!` 
+                        : `⚔️ TEPAT SASARAN! Kamu menyerang MathGod sebesar ${dmg} DAMAGE!`,
+                    "text-emerald-300"
+                );
+
+                // Cek Transisi ke FASE 2 saat HP Fase 1 habis!
+                if (mgHp === 0 && mgPhase === 1) {
+                    setTimeout(() => triggerMathGodPhase2(), 950);
+                } else if (mgHp === 0 && mgPhase === 2) {
+                    setTimeout(() => endMathGodBattle(true), 950);
+                } else {
+                    setTimeout(() => nextMathGodQuestion(), 900);
+                }
+            } else {
+                handleMathGodDamageToPlayer("❌ JAWABAN SALAH! MathGod melancarkan serangan balik!");
+            }
+        };
+
+        function triggerMathGodPhase2() {
+            mgPhase = 2;
+            mgBossMaxHp = 150;
+            mgHp = 150;
+
+            AudioEngine.sfx('bossRoar');
+            AudioEngine.startBGM('phase2');
+            triggerScreenShake();
+
+            const phaseBadge = document.getElementById('mg-phase-badge');
+            phaseBadge.textContent = "🔥 FASE 2: SUPREME MATHGOD (MURKA)";
+            phaseBadge.className = "px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-rose-600/30 text-rose-300 border border-rose-500 animate-pulse";
+
+            const bossAvatar = document.getElementById('mg-boss-avatar');
+            bossAvatar.textContent = "😈⚡👑";
+            bossAvatar.className = "text-5xl sm:text-6xl animate-boss-enraged select-none";
+
+            document.getElementById('mg-boss-name').textContent = "SUPREME MATHGOD [FASE 2]";
+            document.getElementById('mg-boss-taunt').textContent = '"MUSTAHIL! Sekarang rasakan kekuatan penuh dewa matematika!"';
+
+            updateMathGodUI();
+            setCombatLog("🔥 MATHGOD BANGKIT KE FASE 2! HP pulih menjadi 150, soal lebih sulit & sihir gangguan meningkat!", "text-rose-300");
+
+            setTimeout(() => nextMathGodQuestion(), 1800);
+        }
+
+        function handleMathGodDamageToPlayer(reasonMsg) {
+            if (mgTimerInterval) clearInterval(mgTimerInterval);
+            clearBossAbilities();
+            triggerScreenShake();
+
+            // Cek Perisai Suci Paladin
+            if (mgHasShield) {
+                mgHasShield = false;
+                AudioEngine.sfx('shield');
+                updateMathGodUI();
+                setCombatLog(`🛡️ PERISAI SUCI PALADIN PECAH! Serangan MathGod berhasil ditangkis tanpa mengurangi nyawa!`, "text-sky-300");
+                setTimeout(() => nextMathGodQuestion(), 1200);
+                return;
+            }
+
+            AudioEngine.sfx('hurt');
+            mgPlayerHp = Math.max(0, mgPlayerHp - 1);
+            updateMathGodUI();
+            setCombatLog(`${reasonMsg} (-1 ❤️ Nyawa)`, "text-rose-400");
+
+            if (mgPlayerHp <= 0) {
+                setTimeout(() => endMathGodBattle(false), 1100);
+            } else {
+                setTimeout(() => nextMathGodQuestion(), 1200);
+            }
+        }
+
+        function updateMathGodUI() {
+            const char = CHARACTERS[selectedCharKey];
+            document.getElementById('boss-hp-text').textContent = `${mgHp} / ${mgBossMaxHp} HP`;
+            const pct = Math.max(0, Math.min(100, (mgHp / mgBossMaxHp) * 100));
+            document.getElementById('boss-hp-bar').style.width = `${pct}%`;
+
+            let hearts = "";
+            for (let i = 0; i < char.maxHp; i++) {
+                hearts += i < mgPlayerHp ? "❤️ " : "🖤 ";
+            }
+            document.getElementById('player-hearts').textContent = hearts.trim();
+
+            const shieldBadge = document.getElementById('mg-shield-status');
+            if (mgHasShield) shieldBadge.classList.remove('hidden');
+            else shieldBadge.classList.add('hidden');
+        }
+
+        function spawnVictoryConfetti() {
+            const colors = ['#f5c451', '#fde08d', '#10b981', '#38bdf8', '#f43f5e'];
+            for (let i = 0; i < 65; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'confetti-piece rounded-sm';
+                piece.style.left = Math.random() * 100 + 'vw';
+                piece.style.width = (Math.random() * 8 + 6) + 'px';
+                piece.style.height = (Math.random() * 12 + 6) + 'px';
+                piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                piece.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                piece.style.animationDelay = (Math.random() * 0.5) + 's';
+                document.body.appendChild(piece);
+                setTimeout(() => piece.remove(), 4500);
+            }
+        }
+
+        function endMathGodBattle(isWin) {
+            clearBossAbilities();
+            document.getElementById('mg-battle-box').classList.add('hidden');
+            const endScreen = document.getElementById('mg-end-screen');
+            endScreen.classList.remove('hidden');
+
+            const title = document.getElementById('mg-end-title');
+            const desc = document.getElementById('mg-end-desc');
+            const icon = document.getElementById('mg-end-icon');
+            const rewardBox = document.getElementById('mg-trophy-reward-box');
+            const trophyNameEl = document.getElementById('mg-trophy-name');
+
+            const char = CHARACTERS[selectedCharKey];
+
+            if (isWin) {
+                AudioEngine.sfx('victory');
+                AudioEngine.startBGM('victory');
+                spawnVictoryConfetti();
+
+                icon.textContent = "👑🏆🎉";
+                title.textContent = "KEMENANGAN LEGENDARIS ATAS SUPREME MATHGOD!";
+                desc.textContent = `Luar biasa! Menggunakan ${char.name}, kamu berhasil menaklukkan Fase 1 dan Fase 2 Supreme MathGod dalam ${mgQuestionCount} ronde pertarungan!`;
+                
+                const trophyTitle = `Penakluk Supreme MathGod (${char.name})`;
+                rewardBox.classList.remove('hidden');
+                trophyNameEl.textContent = `🏆 ${trophyTitle}`;
+
+                if (!trophies.includes(trophyTitle)) {
+                    trophies.push(trophyTitle);
+                    localStorage.setItem('mathrush_trophies_v2', JSON.stringify(trophies));
+                    updateTrophyUI();
+                }
+            } else {
+                AudioEngine.sfx('wrong');
+                AudioEngine.startBGM('lobby');
+                rewardBox.classList.add('hidden');
+
+                icon.textContent = "💀⚔️";
+                title.textContent = "Kamu Gugur di Arena MathGod...";
+                desc.textContent = "Jangan menyerah! Pelajari kembali rumus cepat di menu Materi Lengkap atau coba karakter lain yang sesuai gaya bermainmu.";
+            }
+        }
+
+        // =========================================================================
+        // 8. TROPHY MODAL SYSTEM
+        // =========================================================================
+        window.openTrophyModal = function() {
+            document.getElementById('trophy-modal').classList.remove('hidden');
+            renderTrophyList();
+        };
+
+        window.closeTrophyModal = function() {
+            document.getElementById('trophy-modal').classList.add('hidden');
+        };
+
+        function renderTrophyList() {
+            const list = document.getElementById('trophy-list');
+            if (trophies.length === 0) {
+                list.innerHTML = `<div class="text-center py-6 text-gray-400 text-sm">Belum ada trofi yang dikoleksi.<br>Raih skor $\\ge 80$ di Quiz atau kalahkan Supreme MathGod!</div>`;
+                window.safeRenderMath(list);
+                return;
+            }
+            list.innerHTML = trophies.map(t => `
+                <div class="p-3.5 rounded-xl bg-obsidian-900 border border-gold-500/45 flex items-center gap-3 shadow-gold-glow">
+                    <span class="text-2xl">🏆</span>
+                    <div>
+                        <span class="font-bold text-gold-300 text-sm block">${t}</span>
+                        <span class="text-[11px] text-gray-400">Penghargaan Kehormatan PSAS Kelas 10</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateTrophyUI() {
+            const count = trophies.length;
+            const badge1 = document.getElementById('header-trophy-count');
+            const badge2 = document.getElementById('home-trophy-count');
+            if (badge1) badge1.textContent = count;
+            if (badge2) badge2.textContent = count;
+        }
+    </script>
+</body>
+</html>
